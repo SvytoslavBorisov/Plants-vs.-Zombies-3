@@ -1,5 +1,5 @@
 import pygame
-from classPlant import Plant, load_image
+from classPlant import Plant, load_image, GatlingPea
 
 
 class Field:
@@ -39,7 +39,7 @@ class Field:
 
     def on_click(self, cell):
         if self.board[cell[0]][cell[1]] == '':
-            self.board[cell[0]][cell[1]] = Plant(plants['gatlingPea'])
+            self.board[cell[0]][cell[1]] = GatlingPea(plants['gatlingPea'], plants['gatlingPeaShoot'])
 
     def get_cell(self, mouse_pos):
         self.data.clear()
@@ -62,8 +62,9 @@ GREEN = pygame.Color(0, 255, 0)
 YELLOW = pygame.Color(0, 255, 255)
 BLACK = pygame.Color(0, 0, 0)
 
-plants = {'wallNut': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(22)],
-          'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(22)]}
+plants = {'wallNut': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
+          'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
+          'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (80, 80)) for i in range(15)]}
 sBackGround = pygame.image.load('Graphics/Frontyard.jpg').convert()
 size = WIDTH, HEIGHT = 1026, 600
 
