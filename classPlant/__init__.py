@@ -3,11 +3,11 @@ import random
 import os
 
 
-size = width, height = 1366, 768
+size = width, height = 700, 600
 
 
 def load_image(name, size, colorkey=None):
-    fullname = os.path.join('Graphics', name)
+    fullname = os.path.join(name)
     if size != (0, 0):
         return pygame.transform.scale(pygame.image.load(fullname).convert_alpha(), size)
     else:
@@ -16,12 +16,19 @@ def load_image(name, size, colorkey=None):
 
 class Plant(pygame.sprite.Sprite):
 
-    def __init__(self, fileOfSprite, size):
+    def __init__(self, fileOfSprite, count, size):
         super().__init__()
-        self.image = load_image(f'{fileOfSprite}.png', size)
-        self.rect = self.image.get_rect()
-        self.rect.x = random.randrange(width)
-        self.rect.y = random.randrange(height)
+        self.images_list = []
+        self.rects = []
+        self.cur_frame = 0
+        if count != 0:
+            for i in range(count):
+                self.images_list.append(load_image(f'{fileOfSprite}/{i}.png', size))
+                self.rects.append(self.images_list[i].get_rect())
+        else:
+            self.images_list.append(load_image(f'{fileOfSprite}.png', size))
+            self.rects.append(self.images_list[0].get_rect())
 
     def update(self):
-        self.rect = self.rect.move(random.randrange(3) - 1, random.randrange(3) - 1)
+        self.cur_frame = (self.cur_frame + 1) % len(self.images_list)
+        self.image = self.images_list[self.cur_frame]
