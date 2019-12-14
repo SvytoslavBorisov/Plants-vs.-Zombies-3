@@ -2,84 +2,35 @@ import pygame
 from classPlant import Plant
 
 
-pygame.init()
-size = width, height = 1366, 768
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-screen.fill((0, 0, 0))
-WHITE = pygame.Color(255, 255, 255)
-GREEN = pygame.Color(0, 255, 0)
-plants = Plant('Wallnut_body', (80, 80))
-backGame = pygame.transform.scale(pygame.image.load('Graphics/backGame.png'), (width, height))
-Card_GatlingPea = pygame.transform.scale(pygame.image.load('Graphics/Card_GatlingPea.png'), (100, 100))
-screen.blit(backGame, (0, 0))
-
-
-class BoardOfCards:
-    def __init__(self, width, height):
+class Field:
+    def __init__(self, width, height, cell_width, cell_height, left, top):
         self.width = width
         self.height = height
-        self.board = [['yellow'] * height for _ in range(width)]
-        self.left = 10
-        self.top = 10
-        self.cell_size = 30
-        self.data = []
-
-    def set_view(self, left, top, cell_size):
+        self.cell_width = cell_width
+        self.cell_height = cell_height
         self.left = left
         self.top = top
-        self.cell_size = cell_size
-
-    def render(self):
-        for g in range(self.width):
-            for i in range(self.height):
-                pygame.draw.rect(screen, WHITE, (g * self.cell_size + self.left,
-                                                 i * self.cell_size + self.top, self.cell_size,
-                                                 self.cell_size))
-
-    def get_click(self, mouse_pos):
-        cell = self.get_cell(mouse_pos)
-        self.on_click(cell)
-
-    def on_click(self, cell):
-        if cell:
-            screen.blit(Card_GatlingPea, (self.cell_size * cell[0] + self.left,
-                                          self.cell_size * cell[1] + self.top,
-                                          self.cell_size,
-                                          self.cell_size))
-
-    def get_cell(self, mouse_pos):
-        self.data.clear()
-        if self.left < mouse_pos[0] < self.left + self.width * self.cell_size \
-                and self.top < mouse_pos[1] < self.top + self.height * self.cell_size:
-            self.data.append((mouse_pos[0] - self.left) // self.cell_size)
-            self.data.append((mouse_pos[1] - self.top) // self.cell_size)
-            return self.data
-        else:
-            return None
-
-
-class BoardOfGame:
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.board = [['green'] * height for _ in range(width)]
-        self.left = 10
-        self.top = 10
-        self.cell_size = 30
+        self.board = [[]]
+        for i in range(self.width):
+            for j in range(self.height):
+                self.board[i].append('')
+            self.board.append([])
         self.data = []
 
-    def set_view(self, left, top, cell_size):
-        self.left = left
-        self.top = top
-        self.cell_size = cell_size
-
     def render(self):
-        for g in range(self.width):
-            for i in range(self.height):
-                pygame.draw.rect(screen, WHITE, (g * self.cell_size + self.left,
-                                                 i * self.cell_size + self.top,
-                                                 self.cell_size,
-                                                 self.cell_size), 1)
+        for i in range(self.height):
+            for j in range(self.width):
+                #pygame.draw.rect(screen, pygame.Color("white"),
+                #                 pygame.Rect((self.left + j * self.cell_width,
+                #                              self.top + i * self.cell_height),
+                #                             (self.cell_width, self.cell_height)), 1)
+
+                if self.board[j][i] != '':
+                    self.board[j][i].update()
+                    screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
+                                               self.cell_height * i + self.top,
+                                               self.cell_width,
+                                               self.cell_height))
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -87,39 +38,54 @@ class BoardOfGame:
             self.on_click(cell)
 
     def on_click(self, cell):
-        screen.blit(plants.image, (self.cell_size * cell[0] + self.left,
-                                   self.cell_size * cell[1] + self.top,
-                                   self.cell_size,
-                                   self.cell_size))
+        if self.board[cell[0]][cell[1]] == '':
+            self.board[cell[0]][cell[1]] = Plant('Graphics/animationGatlingPea', 22, (80, 80))
 
     def get_cell(self, mouse_pos):
         self.data.clear()
-        if self.left < mouse_pos[0] < self.left + self.width * self.cell_size \
-                and self.top < mouse_pos[1] < self.top + self.height * self.cell_size:
-            self.data.append((mouse_pos[0] - self.left) // self.cell_size)
-            self.data.append((mouse_pos[1] - self.top) // self.cell_size)
+        if self.left < mouse_pos[0] < self.left + self.width * self.cell_width \
+                and self.top < mouse_pos[1] < self.top + self.height * self.cell_height:
+            self.data.append((mouse_pos[0] - self.left) // self.cell_width)
+            self.data.append((mouse_pos[1] - self.top) // self.cell_height)
             return self.data
         else:
             return None
 
 
-boardGame = BoardOfGame(9, 5)
-boardGame.set_view(240, 104, 80)
-boardGame.render()
+pygame.init()
+size = width, height = 700, 600
+#screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+screen = pygame.display.set_mode(size)
+clock = pygame.time.Clock()
+screen.fill((0, 0, 0))
+GREEN = pygame.Color(0, 255, 0)
+YELLOW = pygame.Color(0, 255, 255)
+BLACK = pygame.Color(0, 0, 0)
 
-boardCards = BoardOfCards(1, 5)
-boardCards.set_view(5, 5, 100)
-boardCards.render()
+plants = {'wallNut': Plant('Graphics/Wallnut_body', 0, (80, 80)),
+          'gatlingPea': Plant('Graphics/animationGatlingPea', 22, (80, 80))}
+sBackGround = pygame.image.load('Graphics/Frontyard.jpg').convert()
+size = WIDTH, HEIGHT = 1026, 600
+
+split_point_x = 1026
+screen = pygame.display.set_mode(size)
+
+screen.blit(sBackGround, (0, 0))
+field = Field(9, 5, 82, 99, 245, 80)
 
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or (event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE):
-            running = False
-        if event.type == pygame.MOUSEBUTTONUP:
-            boardCards.get_click(event.pos)
-            boardGame.get_click(event.pos)
+    clock.tick(25)
+    screen.fill(BLACK)
+    screen.blit(sBackGround, (0, 0))
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+           field.get_click(event.pos)
+
+    field.render()
     pygame.display.flip()
 
 pygame.quit()
