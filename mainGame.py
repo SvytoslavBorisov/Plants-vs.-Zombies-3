@@ -65,7 +65,7 @@ BLACK = pygame.Color(0, 0, 0)
 plants = {'wallNut': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
           'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
           'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (80, 80)) for i in range(15)]}
-sBackGround = pygame.image.load('Graphics/Frontyard.jpg').convert()
+sBackGround = pygame.image.load('Graphics/other/Frontyard.jpg').convert()
 size = WIDTH, HEIGHT = 1026, 600
 
 split_point_x = 1026
