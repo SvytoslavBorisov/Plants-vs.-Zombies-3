@@ -1,5 +1,38 @@
 import pygame
-from classPlant import Plant, load_image, GatlingPea
+from classPlant import Plant, load_image, GatlingPea, Sunrise
+import sys
+FPS = 50
+
+
+def terminate():
+    pygame.quit()
+    sys.exit()
+
+
+def start_screen():
+    intro_text = [""]
+
+    fon = pygame.transform.scale(pygame.image.load('Graphics/other/fon.png'), (width, height))
+    screen.blit(fon, (0, 0))
+    font = pygame.font.Font(None, 30)
+    text_coord = 50
+    for line in intro_text:
+        string_rendered = font.render(line, 1, pygame.Color('white'))
+        intro_rect = string_rendered.get_rect()
+        text_coord += 10
+        intro_rect.top = text_coord
+        intro_rect.x = 10
+        text_coord += intro_rect.height
+        screen.blit(string_rendered, intro_rect)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                return  # начинаем игру
+        pygame.display.flip()
+        clock.tick(FPS)
 
 
 class Field:
@@ -32,14 +65,14 @@ class Field:
                                                self.cell_width,
                                                self.cell_height))
 
-    def get_click(self, mouse_pos):
+    def get_click(self, mouse_pos, plant):
         cell = self.get_cell(mouse_pos)
         if cell:
-            self.on_click(cell)
+            self.on_click(cell, plant)
 
-    def on_click(self, cell):
+    def on_click(self, cell, plant):
         if self.board[cell[0]][cell[1]] == '':
-            self.board[cell[0]][cell[1]] = GatlingPea(plants['gatlingPea'], plants['gatlingPeaShoot'])
+            self.board[cell[0]][cell[1]] = plant
 
     def get_cell(self, mouse_pos):
         self.data.clear()
@@ -57,6 +90,9 @@ size = width, height = 700, 600
 #screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
+
+start_screen()
+
 screen.fill((0, 0, 0))
 GREEN = pygame.Color(0, 255, 0)
 YELLOW = pygame.Color(0, 255, 255)
@@ -64,7 +100,9 @@ BLACK = pygame.Color(0, 0, 0)
 
 plants = {'wallNut': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
           'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
-          'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (80, 80)) for i in range(15)]}
+          'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (80, 80)) for i in range(15)],
+          'sunrise': [load_image(f'Graphics/animationSunrise/{i}.png', (80, 80)) for i in range(15)]}
+
 sBackGround = pygame.image.load('Graphics/other/Frontyard.jpg').convert()
 size = WIDTH, HEIGHT = 1026, 600
 
@@ -84,7 +122,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
-           field.get_click(event.pos)
+            if event.button == 1:
+                field.get_click(event.pos, GatlingPea(plants['gatlingPea'], plants['gatlingPeaShoot']))
+            else:
+                field.get_click(event.pos, Sunrise(plants['sunrise']))
 
     field.render()
     pygame.display.flip()
