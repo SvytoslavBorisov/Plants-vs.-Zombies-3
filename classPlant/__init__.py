@@ -74,3 +74,21 @@ class GatlingPea(Plant):
                 self.glb_len = len(self.images_listShoot)
                 self.image = self.images_listShoot[self.cur_frame]
                 self.glb_cur_frame = 1
+
+
+class Sunrise(Plant):
+
+    def __init__(self, spritesNormal):
+        self.images_listNormal = []
+        self.rectsNormal = []
+
+        self.cur_frame = 0
+        self.glb_cur_frame = 0
+
+        for i in range(len(spritesNormal)):
+            self.images_listNormal.append(spritesNormal[i])
+            self.rectsNormal.append(self.images_listNormal[i].get_rect())
+
+    def update(self):
+        self.cur_frame = (self.cur_frame + 1) % len(self.images_listNormal)
+        self.image = self.images_listNormal[self.cur_frame]
