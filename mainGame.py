@@ -51,6 +51,7 @@ class Field:
         self.data = []
 
     def render(self):
+        global screen
         for i in range(self.height):
             for j in range(self.width):
                 #pygame.draw.rect(screen, pygame.Color("white"),
@@ -59,7 +60,12 @@ class Field:
                 #                             (self.cell_width, self.cell_height)), 1)
 
                 if self.board[j][i] != '':
-                    self.board[j][i].update()
+                    temp = self.board[j][i].update()
+                    if temp:
+                        screen.blit(temp, (self.cell_width * j + self.left + 50,
+                                               self.cell_height * i + self.top + 50,
+                                               self.cell_width,
+                                               self.cell_height))
                     screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
                                                self.cell_height * i + self.top,
                                                self.cell_width,
@@ -101,7 +107,9 @@ BLACK = pygame.Color(0, 0, 0)
 plants = {'wallNut': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
           'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', (80, 80)) for i in range(23)],
           'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (80, 80)) for i in range(15)],
-          'sunrise': [load_image(f'Graphics/animationSunrise/{i}.png', (80, 80)) for i in range(15)]}
+          'sunrise': [load_image(f'Graphics/animationSunrise/{i}.png', (80, 80)) for i in range(16)],
+          'sunriseGiveSun': [load_image(f'Graphics/animationSunriseGiveSun/{i}.png', (80, 80)) for i in range(14)],
+          'pea': load_image(f'Graphics/other/pea.png', (20, 20))}
 
 sBackGround = pygame.image.load('Graphics/other/Frontyard.jpg').convert()
 size = WIDTH, HEIGHT = 1026, 600
@@ -123,9 +131,9 @@ while running:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                field.get_click(event.pos, GatlingPea(plants['gatlingPea'], plants['gatlingPeaShoot']))
+                field.get_click(event.pos, GatlingPea(plants['gatlingPea'], plants['gatlingPeaShoot'], plants['pea']))
             else:
-                field.get_click(event.pos, Sunrise(plants['sunrise']))
+                field.get_click(event.pos, Sunrise(plants['sunrise'], plants['sunriseGiveSun']))
 
     field.render()
     pygame.display.flip()

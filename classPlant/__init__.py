@@ -32,12 +32,13 @@ class Plant(pygame.sprite.Sprite):
 
 class GatlingPea(Plant):
 
-    def __init__(self, spritesNormal, spritesShoot):
+    def __init__(self, spritesNormal, spritesShoot, pea):
         self.images_listNormal = []
         self.rectsNormal = []
 
         self.images_listShoot = []
         self.rectsShoot = []
+        self.pea = pea
 
         self.cur_frame = 0
         self.glb_cur_frame = 0
@@ -78,9 +79,12 @@ class GatlingPea(Plant):
 
 class Sunrise(Plant):
 
-    def __init__(self, spritesNormal):
+    def __init__(self, spritesNormal, spritesShoot):
         self.images_listNormal = []
         self.rectsNormal = []
+
+        self.images_listGive = []
+        self.rectsShoot = []
 
         self.cur_frame = 0
         self.glb_cur_frame = 0
@@ -89,6 +93,31 @@ class Sunrise(Plant):
             self.images_listNormal.append(spritesNormal[i])
             self.rectsNormal.append(self.images_listNormal[i].get_rect())
 
+        for i in range(len(spritesShoot)):
+            self.images_listGive.append(spritesShoot[i])
+            self.rectsShoot.append(self.images_listGive[i].get_rect())
+
+        self.glb_len = len(self.images_listNormal)
+
     def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.images_listNormal)
-        self.image = self.images_listNormal[self.cur_frame]
+
+        if self.glb_cur_frame == 0:
+            self.cur_frame = (self.cur_frame + 1) % self.glb_len
+            if self.cur_frame == 0:
+                self.glb_len = len(self.images_listGive)
+                self.image = self.images_listGive[self.cur_frame]
+                self.glb_cur_frame = 1
+            else:
+                self.glb_len = len(self.images_listNormal)
+                self.image = self.images_listNormal[self.cur_frame]
+                self.glb_cur_frame = 0
+        else:
+            self.cur_frame = (self.cur_frame + 1) % self.glb_len
+            if self.cur_frame == 0:
+                self.glb_len = len(self.images_listNormal)
+                self.image = self.images_listNormal[self.cur_frame]
+                self.glb_cur_frame = 0
+            else:
+                self.glb_len = len(self.images_listGive)
+                self.image = self.images_listGive[self.cur_frame]
+                self.glb_cur_frame = 1
