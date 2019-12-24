@@ -44,7 +44,7 @@ PANEL_STEP = 10
 
 plants = {'wallNut': [load_image(f'Graphics/animationWallNut/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (70, 80)) for i in range(44)],
           'gatlingPea': [load_image(f'Graphics/animationGatlingPea/{i}.png', SIZE_OF_PLANT) for i in range(23)],
-          'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', (SIZE_OF_PLANT[0] + 5, SIZE_OF_PLANT[0] + 5)) for i in range(15)],
+          'gatlingPeaShoot': [load_image(f'Graphics/animationGatlingPeaShoot/{i}.png', SIZE_OF_PLANT) for i in range(14)],
           'pea': load_image(f'Graphics/animationGatlingPeaShoot/pea.png', (27, 27)),
           'sunrise': [load_image(f'Graphics/animationSunrise/{i}.png', SIZE_OF_PLANT) for i in range(15)],
           'sunriseGiveSun': [load_image(f'Graphics/animationSunriseGiveSun/{i}.png', SIZE_OF_PLANT) for i in range(14)],

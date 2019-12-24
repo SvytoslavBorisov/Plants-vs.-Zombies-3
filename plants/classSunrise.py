@@ -26,11 +26,11 @@ class Sunrise(pygame.sprite.Sprite):
         self.row = row
         self.col = col
 
-        for j in range(5):
+        for j in range(1):
             for i in range(len(spritesNormal)):
                 self.images_listNormal.append(spritesNormal[i])
-                self.images_listNormal.append(spritesNormal[i])
-                self.rectsNormal.append(self.images_listNormal[i].get_rect())
+                if i & 1:
+                    self.images_listNormal.append(spritesNormal[i])
                 self.rectsNormal.append(self.images_listNormal[i].get_rect())
 
         for i in range(len(spritesGive)):
@@ -71,8 +71,8 @@ class Sun(pygame.sprite.Sprite):
         super().__init__()
         self.image = image
         self.rect = self.image.get_rect()
-        self.rect.x = FIELD_CELL_WIDTH * row + FIELD_LEFT + 15
-        self.rect.y = FIELD_CELL_HEIGHT * col + FIELD_TOP + 0
+        self.rect.x = FIELD_CELL_WIDTH * row + FIELD_LEFT + 10
+        self.rect.y = FIELD_CELL_HEIGHT * col + FIELD_TOP - 25
         self.coordsAnimation = [[0, 0], [0, -5], [4, -5], [6, -5], [5, 5], [0, 4], [0, 4], [0, 5], [0, 5], [0, 5]]
         self.numAnim = 0
         self.active = True
