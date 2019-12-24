@@ -2,6 +2,7 @@ import pygame
 from classPlant import *
 from classPanel import Panel
 from classField import Field
+from classZombie import konusZombie
 from allConstants import *
 import sys
 
@@ -56,6 +57,7 @@ panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANE
 running = True
 
 suns = 0
+zs = pygame.sprite.Group()
 
 while running:
     for event in pygame.event.get():
@@ -65,11 +67,16 @@ while running:
             if field.get_click(event.pos, panel.checkPlant):
                 panel.checkPlant = ''
             panel.get_click(event.pos)
-
+            
+    if random.choice([0] * 44 + [1]):
+        zs.add(konusZombie(random.randint(0, 4), 100))
+        
     screen.blit(sBackGround, (0, 0))
     panel.render()
     field.render()
+    zs.update()
+    zs.draw(screen)
     pygame.display.flip()
     clock.tick(FPS)
-
+    
 pygame.quit()

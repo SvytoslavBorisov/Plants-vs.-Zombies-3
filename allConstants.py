@@ -55,3 +55,5 @@ cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
          'potatoBomb': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS)}
+
+zombies = {'konus': [load_image(f'zombies/{str(i + 1).rjust(4, "0")}.png', (190, 170)) for i in range(21)]}
