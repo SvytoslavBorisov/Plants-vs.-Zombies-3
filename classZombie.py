@@ -26,5 +26,5 @@ class konusZombie(justZombie):
         self.rect.x = self.x
         self.cur += 1
         self.cur %= len(self.data)
-        if self.x < 150:
+        if self.x < 140:
             self.kill()
