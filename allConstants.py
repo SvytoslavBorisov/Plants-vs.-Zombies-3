@@ -48,8 +48,10 @@ plants = {'wallNut': [load_image(f'Graphics/animationWallNut/{"0" *(4 - len(str(
           'pea': load_image(f'Graphics/animationGatlingPeaShoot/pea.png', (27, 27)),
           'sunrise': [load_image(f'Graphics/animationSunrise/{i}.png', SIZE_OF_PLANT) for i in range(15)],
           'sunriseGiveSun': [load_image(f'Graphics/animationSunriseGiveSun/{i}.png', SIZE_OF_PLANT) for i in range(14)],
-          'sun': load_image(f'Graphics/animationSunriseGiveSun/sun.png', (70, 70))}
+          'sun': load_image(f'Graphics/animationSunriseGiveSun/sun.png', (70, 70)),
+          'potatoBomb': [load_image(f'Graphics/animationPotatoBomb/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(4)]}
 
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
-         'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS)}
+         'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
+         'potatoBomb': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS)}

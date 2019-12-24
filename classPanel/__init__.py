@@ -19,7 +19,7 @@ class Panel:
             self.board.append([])
         self.board[0][1] = 'sunrise'
         self.board[0][3] = 'wallNut'
-        self.board[0][5] = 'sunrise'
+        self.board[0][5] = 'potatoBomb'
         self.data = []
 
     def render(self):
