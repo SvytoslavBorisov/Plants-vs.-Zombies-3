@@ -16,8 +16,22 @@ def terminate():
 def start_screen():
     intro_text = [""]
 
+
+    class buttonStart(pygame.sprite.Sprite):
+        def __init__(self, image, x, y):
+            super().__init__()
+            self.image = image
+            self.rect = self.image.get_rect()
+            # вычисляем маску для эффективного сравнения
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect.x = x
+            self.rect.y = y
+
+
     fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.jpg'), (WIDTH2, HEIGHT2))
     screen.blit(fon, (0, 0))
+    bStart = buttonStart(menu['start'], 580, 80)
+    screen.blit(bStart.image, (580, 80))
     font = pygame.font.Font(None, 30)
     text_coord = 50
     for line in intro_text:
@@ -34,7 +48,9 @@ def start_screen():
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                return shields['game']()
+                bStart1 = buttonStart(pygame.image.load('Graphics/other/pab.png'), *event.pos)
+                if pygame.sprite.collide_rect(bStart, bStart1):
+                    return shields['game']()
         pygame.display.flip()
         clock.tick(FPS)
 

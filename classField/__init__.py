@@ -69,6 +69,7 @@ class Field:
         if self.board[cell[0]][cell[1]] == '':
             self.board[cell[0]][cell[1]] = choicePlant(checkPlant[0], [cell[0], cell[1]], self.game)
             return [True, checkPlant[1]]
+        return [False, 0]
 
     def get_cell(self, mouse_pos):
         self.data.clear()

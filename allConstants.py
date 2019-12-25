@@ -55,6 +55,8 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
           'potatoBomb': [load_image(f'Graphics/plants/animationPotatoBomb/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(4)],
           'lownMower': load_image(f'Graphics/other/lownMower.png', (75, 75))}
 
+menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141))}
+
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
