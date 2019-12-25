@@ -15,7 +15,8 @@ class GatlingPea(pygame.sprite.Sprite):
         self.images_listNormal = []
         self.rectsNormal = []
 
-        self.object = []
+        self.objects = []
+        self.cost = 75
 
         self.images_listShoot = []
         self.rectsShoot = []
@@ -36,7 +37,7 @@ class GatlingPea(pygame.sprite.Sprite):
 
         self.glb_len = len(self.images_listNormal)
 
-    def update(self):
+    def update(self, *args):
         if self.glb_cur_frame == 0:
             self.cur_frame = (self.cur_frame + 1) % self.glb_len
             if self.cur_frame == 0:
@@ -59,7 +60,7 @@ class GatlingPea(pygame.sprite.Sprite):
                 self.image = self.images_listShoot[self.cur_frame]
                 self.glb_cur_frame = 1
                 if self.cur_frame == 10:
-                    self.object.append(
+                    self.objects.append(
                         Pea(self.row, self.col, plants['pea'], self.rectsNormal[0].x, self.rectsNormal[0].y))
 
 
@@ -72,7 +73,7 @@ class Pea(pygame.sprite.Sprite):
         self.rect.x = FIELD_CELL_WIDTH * (row) + FIELD_LEFT + 55
         self.rect.y = FIELD_CELL_HEIGHT * (col) + FIELD_TOP + 15
 
-    def update(self):
+    def update(self, *args):
         self.rect = self.rect.move(10, 0)
         if self.rect.x > WIDTH2:
             self.kill()

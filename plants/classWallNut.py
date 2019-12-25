@@ -17,7 +17,7 @@ class WallNut(pygame.sprite.Sprite):
         self.cur_frame = 0
         self.glb_cur_frame = 0
 
-        self.object = []
+        self.objects = []
         self.row = row
         self.col = col
 
@@ -27,8 +27,7 @@ class WallNut(pygame.sprite.Sprite):
 
         self.glb_len = len(self.images_list)
 
-    def update(self):
+    def update(self, *args):
         self.cur_frame = (self.cur_frame + 1) % self.glb_len
         self.image = self.images_list[self.cur_frame]
-        print(self.cur_frame)
 

@@ -5,7 +5,7 @@ from classPanel import *
 
 
 class Field:
-    def __init__(self, width, height, cell_width, cell_height, left, top, screen):
+    def __init__(self, width, height, cell_width, cell_height, left, top, screen, game):
         self.width = width
         self.height = height
         self.cell_width = cell_width
@@ -13,6 +13,7 @@ class Field:
         self.left = left
         self.top = top
         self.screen = screen
+        self.game = game
         self.board = [[]]
         self.objects = []
         for i in range(self.width):
@@ -24,6 +25,10 @@ class Field:
     def render(self):
         self.objects = []
         for i in range(self.height):
+            self.screen.blit(plants['lownMower'], (self.left - 75,
+                                               self.cell_height * i + self.top,
+                                               self.cell_width,
+                                               self.cell_height))
             for j in range(self.width):
                 """
                 pygame.draw.rect(screen, pygame.Color("white"),
@@ -37,33 +42,33 @@ class Field:
                                                self.cell_height * i + self.top,
                                                self.cell_width,
                                                self.cell_height))
-                    if self.board[j][i].object:
-                        for h in range(len(self.board[j][i].object)):
-                            coord = self.board[j][i].object[h].update()
+                    if self.board[j][i].objects:
+                        for h in range(len(self.board[j][i].objects)):
+                            coord = self.board[j][i].objects[h].update()
                             if coord:
-                                self.objects.append([self.board[j][i].object[h], [self.board[j][i].object[h].image, coord], j, i, h])
+                                self.objects.append([self.board[j][i].objects[h], [self.board[j][i].objects[h].image, coord], j, i, h])
         for x in self.objects:
             screen.blit(*x[1])
 
     def get_click(self, mouse_pos, checkPlant):
         cell = self.get_cell(mouse_pos)
         i = 0
-        temp = []
         while i < len(self.objects):
-            if self.objects[i][0].rect.collidepoint(mouse_pos):
-                self.board[self.objects[i][2]][self.objects[i][3]].object[self.objects[i][4]].active = False
-                del self.objects[i]
-                print('+1 солнце')
+            if self.objects[i][0].rect.collidepoint(mouse_pos) and self.objects[i][0].type == 'sun':
+                self.board[self.objects[i][2]][self.objects[i][3]].objects[self.objects[i][4]].active = False
+                self.objects.pop(i)
             else:
                 i += 1
         if cell and checkPlant:
-            if self.on_click(cell, checkPlant):
-                return True
+            temp = self.on_click(cell, checkPlant)
+            if temp[0]:
+                return [True, self.game.suns - temp[1]]
+        return [False, self.game.suns]
 
     def on_click(self, cell, checkPlant):
         if self.board[cell[0]][cell[1]] == '':
-            self.board[cell[0]][cell[1]] = choicePlant(checkPlant, [cell[0], cell[1]])
-            return True
+            self.board[cell[0]][cell[1]] = choicePlant(checkPlant[0], [cell[0], cell[1]], self.game)
+            return [True, checkPlant[1]]
 
     def get_cell(self, mouse_pos):
         self.data.clear()

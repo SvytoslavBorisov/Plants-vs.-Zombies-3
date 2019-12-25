@@ -1,17 +1,14 @@
 import pygame
-import random
-import os
-from allConstants import *
+import allConstants
 
 
 class Sunrise(pygame.sprite.Sprite):
 
-    def __init__(self, row, col):
+    def __init__(self, row, col, game):
         super().__init__()
 
-        spritesNormal = plants['sunrise']
-        spritesGive = plants['sunriseGiveSun']
-
+        spritesNormal = allConstants.plants['sunrise']
+        spritesGive = allConstants.plants['sunriseGiveSun']
 
         self.images_listNormal = []
         self.rectsNormal = []
@@ -22,9 +19,12 @@ class Sunrise(pygame.sprite.Sprite):
         self.cur_frame = 0
         self.glb_cur_frame = 0
 
-        self.object = []
+        self.game = game
+
+        self.objects = []
         self.row = row
         self.col = col
+        self.cost = 50
 
         for j in range(1):
             for i in range(len(spritesNormal)):
@@ -62,26 +62,52 @@ class Sunrise(pygame.sprite.Sprite):
                 self.image = self.images_listGive[self.cur_frame]
                 self.glb_cur_frame = 1
                 if self.cur_frame == 10:
-                    self.object.append(
-                        Sun(self.row, self.col, plants['sun'], self.rectsNormal[0].x, self.rectsNormal[0].y))
+                    self.objects.append(
+                        Sun(self.row, self.col, allConstants.plants['sun'], self.rectsNormal[0].x, self.rectsNormal[0].y))
+        i = 0
+        while i < len(self.objects):
+            if self.objects[i].kill:
+                del self.objects[i]
+                self.game.suns += 25
+            else:
+                i += 1
 
 
 class Sun(pygame.sprite.Sprite):
     def __init__(self, row, col, image, x, y):
         super().__init__()
         self.image = image
+        self.type = 'sun'
+        self.kill = False
+
+        self.const = self.image.get_rect()
+        self.const.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
+        self.const.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
+
         self.rect = self.image.get_rect()
-        self.rect.x = FIELD_CELL_WIDTH * row + FIELD_LEFT + 10
-        self.rect.y = FIELD_CELL_HEIGHT * col + FIELD_TOP - 25
-        self.coordsAnimation = [[0, 0], [0, -5], [4, -5], [6, -5], [5, 5], [0, 4], [0, 4], [0, 5], [0, 5], [0, 5]]
+        self.rect.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
+        self.rect.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
+
+        self.coordsAnimation = []
+        for i in range(4):
+            self.coordsAnimation.append([2, -4.5])
+        for i in range(4):
+            self.coordsAnimation.append([1, 4.5])
+        for i in range(7):
+            self.coordsAnimation.append([0.5, 4.5])
         self.numAnim = 0
         self.active = True
 
-    def update(self):
+    def update(self, *args):
         if self.active:
             if self.numAnim < len(self.coordsAnimation):
                 self.rect = self.rect.move(self.coordsAnimation[int(self.numAnim)])
                 self.numAnim += 0.5
             return self.rect
-        else:
-            self.kill()
+        elif self.active == False:
+            if self.rect.x > 270 or self.rect.y > 15:
+                self.rect = self.rect.move([-abs(self.const.x - 270) / 10, -abs(self.const.y - 15) / 10])
+                return self.rect
+            else:
+                self.kill = True
+                del self

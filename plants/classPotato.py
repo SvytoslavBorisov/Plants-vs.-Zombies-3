@@ -11,13 +11,15 @@ class PotatoBomb(pygame.sprite.Sprite):
 
         spritesNormal = plants['potatoBomb']
 
+        self.cost = 25
+
         self.images_listNormal = []
         self.rectsNormal = []
 
         self.cur_frame = 0
         self.glb_cur_frame = 0
 
-        self.object = []
+        self.objects = []
         self.row = row
         self.col = col
 
@@ -27,7 +29,7 @@ class PotatoBomb(pygame.sprite.Sprite):
 
         self.glb_len = len(self.images_listNormal)
 
-    def update(self):
+    def update(self, *args):
 
         self.cur_frame = (self.cur_frame + 1) % self.glb_len
         self.image = self.images_listNormal[self.cur_frame]
