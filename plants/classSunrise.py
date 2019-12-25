@@ -84,4 +84,4 @@ class Sun(pygame.sprite.Sprite):
                 self.numAnim += 0.5
             return self.rect
         else:
-            del self
+            self.kill()

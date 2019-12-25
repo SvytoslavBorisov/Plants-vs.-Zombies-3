@@ -37,7 +37,6 @@ class GatlingPea(pygame.sprite.Sprite):
         self.glb_len = len(self.images_listNormal)
 
     def update(self):
-        print(self.cur_frame)
         if self.glb_cur_frame == 0:
             self.cur_frame = (self.cur_frame + 1) % self.glb_len
             if self.cur_frame == 0:
@@ -76,6 +75,6 @@ class Pea(pygame.sprite.Sprite):
     def update(self):
         self.rect = self.rect.move(10, 0)
         if self.rect.x > WIDTH2:
-            del self
+            self.kill()
             return None
         return self.rect
