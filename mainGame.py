@@ -13,9 +13,24 @@ def terminate():
     sys.exit()
 
 
+def load_screen():
+
+    screen.blit(load_screen_sprites[0], (0, 0))
+    k = 0
+    while k < 13:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+        k += 1
+        screen.blit(load_screen_sprites[k], (0, 0))
+
+        pygame.display.flip()
+        clock.tick(5)
+    return shields['start_screen']()
+
+
 def start_screen():
     intro_text = [""]
-
 
     class buttonStart(pygame.sprite.Sprite):
         def __init__(self, image, x, y):
@@ -27,8 +42,7 @@ def start_screen():
             self.rect.x = x
             self.rect.y = y
 
-
-    fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.jpg'), (WIDTH2, HEIGHT2))
+    fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.png'), (WIDTH2, HEIGHT2))
     screen.blit(fon, (0, 0))
     bStart = buttonStart(menu['start'], 580, 80)
     screen.blit(bStart.image, (580, 80))
@@ -49,7 +63,7 @@ def start_screen():
                 terminate()
             elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                 bStart1 = buttonStart(pygame.image.load('Graphics/other/pab.png'), *event.pos)
-                if pygame.sprite.collide_rect(bStart, bStart1):
+                if pygame.sprite.collide_rect(bStart1, bStart):
                     return shields['game']()
         pygame.display.flip()
         clock.tick(FPS)
@@ -57,7 +71,7 @@ def start_screen():
 
 def game():
     zs = pygame.sprite.Group()
-    game.suns = 50
+    game.suns = 5000
     screen.blit(sBackGround, (0, 0))
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
@@ -74,7 +88,11 @@ def game():
                 panel.get_click(event.pos)
 
         if random.choice([0] * 44 + [1]):
-            zs.add(classZombie.konusZombie(random.randint(0, 4), 100))
+            x = random.randint(0, 1)
+            if x:
+                zs.add(classZombie.konusZombie(random.randint(0, 4), 100))
+            else:
+                zs.add(classZombie.normalZombie(random.randint(0, 4), 100))
 
         screen.blit(sBackGround, (0, 0))
         screen.blit(sMenu, (WIDTH2 - 170, 0))
@@ -96,12 +114,13 @@ pygame.display.set_icon(pygame.image.load('Graphics/other/icon.png'))
 screen = pygame.display.set_mode(SIZE2)
 clock = pygame.time.Clock()
 
-shields = {'start_screen': start_screen,
-           'game': game}
+shields = {'load_screen':load_screen,
+    'start_screen': start_screen,
+    'game': game}
 
-game = Game(50)
+game = Game(5000)
 
 while True:
-    temp = shields['start_screen']()
+    temp = shields['load_screen']()
 
 

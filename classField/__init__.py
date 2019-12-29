@@ -54,7 +54,7 @@ class Field:
         cell = self.get_cell(mouse_pos)
         i = 0
         while i < len(self.objects):
-            if self.objects[i][0].rect.collidepoint(mouse_pos) and self.objects[i][0].type == 'sun':
+            if self.objects[i][0].type == 'sun' and self.objects[i][0].rect.collidepoint(mouse_pos):
                 self.board[self.objects[i][2]][self.objects[i][3]].objects[self.objects[i][4]].active = False
                 self.objects.pop(i)
             else:

@@ -32,7 +32,7 @@ FIELD_CELL_HEIGHT = 99
 FIELD_LEFT = 245
 FIELD_TOP = 80
 
-PANEL_WIDTH = 4
+PANEL_WIDTH = 5
 PANEL_CELL_WIDTH = 125
 PANEL_CELL_HEIGHT = 75
 PANEL_LEFT = 30
@@ -53,13 +53,19 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
           'sunriseGiveSun': [load_image(f'Graphics/plants/animationSunriseGiveSun/{i}.png', SIZE_OF_PLANT) for i in range(14)],
           'sun': load_image(f'Graphics/plants/animationSunriseGiveSun/sun.png', (70, 70)),
           'potatoBomb': [load_image(f'Graphics/plants/animationPotatoBomb/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(4)],
+          'squash': [load_image(f'Graphics/plants/animationSquash/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(17)],
           'lownMower': load_image(f'Graphics/other/lownMower.png', (75, 75))}
 
 menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141))}
 
+load_screen_sprites = [load_image(f'Graphics/other/animationLoadScreen/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(14)]
+
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
-         'potatoBomb': load_image('Graphics/cards/potatoBomb.png', SIZE_OF_CARDS)}
+         'potatoBomb': load_image('Graphics/cards/potatoBomb.png', SIZE_OF_CARDS),
+         'squash': load_image('Graphics/cards/squash.png', SIZE_OF_CARDS)}
 
-zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
+zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'konusDamage1': [load_image(f'Graphics/zombies/animationKonusLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'normal': [load_image(f'Graphics/zombies/animationNormal/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}

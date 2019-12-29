@@ -69,9 +69,10 @@ class Pea(pygame.sprite.Sprite):
     def __init__(self, row, col, image, x, y):
         super().__init__()
         self.image = image
+        self.type = 'pea'
         self.rect = self.image.get_rect()
-        self.rect.x = FIELD_CELL_WIDTH * (row) + FIELD_LEFT + 55
-        self.rect.y = FIELD_CELL_HEIGHT * (col) + FIELD_TOP + 15
+        self.rect.x = FIELD_CELL_WIDTH * row + FIELD_LEFT + 55
+        self.rect.y = FIELD_CELL_HEIGHT * col + FIELD_TOP + 15
 
     def update(self, *args):
         self.rect = self.rect.move(10, 0)
