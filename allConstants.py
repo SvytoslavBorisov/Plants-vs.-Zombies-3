@@ -43,6 +43,8 @@ sBackGround = pygame.image.load('Graphics/other/Frontyard.jpg').convert()
 sMenu = load_image(f'Graphics/other/menu.png', (160, 50))
 panelSun = load_image(f'Graphics/other/panelSun.png', (160, 60))
 
+punkteer = load_image('Graphics/cards/punkteer.png', SIZE_OF_CARDS)
+
 fontSun = pygame.font.Font('freesansbold.ttf', 30)
 pygame.font.get_fonts()
 plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (70, 80)) for i in range(44)],
@@ -54,9 +56,13 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
           'sun': load_image(f'Graphics/plants/animationSunriseGiveSun/sun.png', (70, 70)),
           'potatoBomb': [load_image(f'Graphics/plants/animationPotatoBomb/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(4)],
           'squash': [load_image(f'Graphics/plants/animationSquash/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(17)],
+          'cabbage': [load_image(f'Graphics/plants/animationCabbage/{"0" *(4 - len(str(i))) + str(i) if i != 0 else "0000"}.png', (200, 120)) for i in range(23)],
           'lownMower': load_image(f'Graphics/other/lownMower.png', (75, 75))}
 
-menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141))}
+menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Button1.png', (350, 141)),
+        'startChange': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141)),
+        'exit': load_image(f'Graphics/other/buttonExit.png', (70, 30)),
+        'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (70, 30))}
 
 gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
 
@@ -66,7 +72,8 @@ cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
          'potatoBomb': load_image('Graphics/cards/potatoBomb.png', SIZE_OF_CARDS),
-         'squash': load_image('Graphics/cards/squash.png', SIZE_OF_CARDS)}
+         'squash': load_image('Graphics/cards/squash.png', SIZE_OF_CARDS),
+         'cabbage': load_image('Graphics/cards/cabbage.png', SIZE_OF_CARDS)}
 
 zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'konusDamage1': [load_image(f'Graphics/zombies/animationKonusLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],

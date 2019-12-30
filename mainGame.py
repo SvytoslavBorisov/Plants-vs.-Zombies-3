@@ -44,12 +44,18 @@ def pause():
 
     screen.blit(gameMenu['pause'], (350, 50))
     while True:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                #print(event.pos)
                 if 376 <= event.pos[0] <= 732 and 465 <= event.pos[1] <= 529:
                     return
+                if 448 <= event.pos[0] <= 658 and 388 <= event.pos[1] <= 432:
+                    return shields['start_screen']()
+                if 448 <= event.pos[0] <= 658 and 334 <= event.pos[1] <= 475:
+                    return shields['game']()
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -60,7 +66,11 @@ def start_screen():
     fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.png'), (WIDTH2, HEIGHT2))
     screen.blit(fon, (0, 0))
     bStart = button(menu['start'], 580, 80)
+    bStartChange = button(menu['startChange'], 580, 80)
+    bExit = button(menu['exit'], 930, 490)
+    bExitChange = button(menu['exitChange'], 930, 490)
     screen.blit(bStart.image, (580, 80))
+    screen.blit(bExit.image, (930, 505))
     font = pygame.font.Font(None, 30)
     text_coord = 50
     for line in intro_text:
@@ -76,9 +86,37 @@ def start_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                if pygame.Rect.collidepoint(bStart.rect, event.pos):
+            elif event.type == pygame.MOUSEMOTION:
+                if 583 <= event.pos[0] <= 921 and 109 <= event.pos[1] <= 175:
+                    screen.blit(bStartChange.image, (580, 80))
+                elif 788 <= event.pos[0] <= 902 and 186 <= event.pos[1] <= 218:
+                    screen.blit(bStartChange.image, (580, 80))
+                elif 658 <= event.pos[0] <= 835 and 83 <= event.pos[1] <= 121:
+                    screen.blit(bStartChange.image, (580, 80))
+                elif 620 <= event.pos[0] <= 788 and 175 <= event.pos[1] <= 200:
+                    screen.blit(bStartChange.image, (580, 80))
+                else:
+                    screen.blit(bStart.image, (580, 80))
+                if 930 <= event.pos[0] <= 1000 and 512 <= event.pos[1] <= 535:
+                    screen.blit(bExitChange.image, (930, 505))
+                else:
+                    screen.blit(bExit.image, (930, 505))
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                print(event.pos)
+                if 583 <= event.pos[0] <= 921 and 109 <= event.pos[1] <= 175:
+                    screen.blit(bStartChange.image, (580, 80))
                     return shields['game']()
+                elif 788 <= event.pos[0] <= 902 and 186 <= event.pos[1] <= 218:
+                    screen.blit(bStartChange.image, (580, 80))
+                    return shields['game']()
+                elif 658 <= event.pos[0] <= 835 and 83 <= event.pos[1] <= 121:
+                    screen.blit(bStartChange.image, (580, 80))
+                    return shields['game']()
+                elif 620 <= event.pos[0] <= 788 and 175 <= event.pos[1] <= 200:
+                    screen.blit(bStartChange.image, (580, 80))
+                    return shields['game']()
+                elif 930 <= event.pos[0] <= 1000 and 512 <= event.pos[1] <= 535:
+                    terminate()
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -95,6 +133,7 @@ def game():
             if event.type == pygame.QUIT:
                 terminate()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                #print(event.pos)
                 if pygame.Rect.collidepoint(bMenu.rect, event.pos):
                     shields['pause']()
                 temp = field.get_click(event.pos, panel.checkPlant)

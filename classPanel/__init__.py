@@ -19,6 +19,7 @@ class Panel:
         self.board[0].append(['wallNut', 50, False])
         self.board[0].append(['potatoBomb', 25, False])
         self.board[0].append(['squash', 75, False])
+        #self.board[0].append(['cabbage', 175, False])
         self.data = []
 
     def render(self):
@@ -32,10 +33,10 @@ class Panel:
                                                self.cell_height * i + self.top + self.step * i,
                                                self.cell_width,
                                                self.cell_height))
-                        pygame.draw.rect(self.screen, pygame.Color("black"),
-                                         pygame.Rect((self.left + j * self.cell_width,
-                                                     self.top + i * self.cell_height + self.step * i),
-                                                    (self.cell_width, self.cell_height)), 10)
+                        self.screen.blit(punkteer, (self.cell_width * j + self.left,
+                                               self.cell_height * i + self.top + self.step * i,
+                                               self.cell_width,
+                                               self.cell_height))
                     else:
                         if self.game.suns >= self.board[j][i][1]:
                             self.screen.blit(cards[self.board[j][i][0]], (self.cell_width * j + self.left,
