@@ -43,6 +43,8 @@ sBackGround = pygame.image.load('Graphics/other/Frontyard.jpg').convert()
 sMenu = load_image(f'Graphics/other/menu.png', (160, 50))
 panelSun = load_image(f'Graphics/other/panelSun.png', (160, 60))
 
+mainMenu = [load_image(f'Graphics/other/animationStartMenu/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(11)]
+
 punkteer = load_image('Graphics/cards/punkteer.png', SIZE_OF_CARDS)
 
 fontSun = pygame.font.Font('freesansbold.ttf', 30)
@@ -62,13 +64,15 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
 menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Button1.png', (350, 141)),
         'startChange': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141)),
         'exit': load_image(f'Graphics/other/buttonExit.png', (70, 30)),
-        'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (70, 30))}
+        'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (70, 30)),
+        }
 
 gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
 
 load_screen_sprites = [load_image(f'Graphics/other/animationLoadScreen/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(14)]
 
 soundPick = load_image(f'Graphics/other/soundPick.png', (20, 20))
+progressBarSound = load_image(f'Graphics/other/soundProgressBar.png', (182, 32))
 
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
