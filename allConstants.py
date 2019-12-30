@@ -68,6 +68,8 @@ gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
 
 load_screen_sprites = [load_image(f'Graphics/other/animationLoadScreen/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(14)]
 
+soundPick = load_image(f'Graphics/other/soundPick.png', (20, 20))
+
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
          'sunrise': load_image('Graphics/cards/sunrise.png', SIZE_OF_CARDS),
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
@@ -78,3 +80,6 @@ cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS
 zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'konusDamage1': [load_image(f'Graphics/zombies/animationKonusLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'normal': [load_image(f'Graphics/zombies/animationNormal/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
+
+music = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
+#music.play(-1)

@@ -43,19 +43,49 @@ def load_screen():
 def pause():
 
     screen.blit(gameMenu['pause'], (350, 50))
+    screen.blit(soundPick, (532, 179))
+    volume = button(soundPick, 532, 179)
+    volume.rect = pygame.Rect(537, 179, 142, 20)
+    volFlag = False
     while True:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                #print(event.pos)
+                if pygame.Rect.collidepoint(volume.rect, event.pos):
+                    screen.blit(gameMenu['pause'], (350, 50))
+                    screen.blit(soundPick, (event.pos[0] - 10, 179))
+                    vol = (event.pos[0] - 532) * 0.7 / 100
+                    if vol > 0.1:
+                        music.set_volume(vol)
+                    else:
+                        music.set_volume(0)
+                    volFlag = True
                 if 376 <= event.pos[0] <= 732 and 465 <= event.pos[1] <= 529:
                     return
                 if 448 <= event.pos[0] <= 658 and 388 <= event.pos[1] <= 432:
                     return shields['start_screen']()
                 if 448 <= event.pos[0] <= 658 and 334 <= event.pos[1] <= 475:
                     return shields['game']()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if volFlag:
+                    volFlag = False
+
+        if volFlag and 450 <= event.pos[0] <= 800:
+            screen.blit(gameMenu['pause'], (350, 50))
+            if event.pos[0] < 542:
+                screen.blit(soundPick, (532, 179))
+            elif event.pos[0] > 679:
+                screen.blit(soundPick, (669, 179))
+            else:
+                screen.blit(soundPick, (event.pos[0] - 10, 179))
+            vol = (event.pos[0] - 532) * 0.7 / 100
+            if vol > 0.1:
+                music.set_volume(vol)
+            else:
+                music.set_volume(0)
+
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -65,6 +95,8 @@ def start_screen():
 
     fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.png'), (WIDTH2, HEIGHT2))
     screen.blit(fon, (0, 0))
+
+    music.play(-1)
     bStart = button(menu['start'], 580, 80)
     bStartChange = button(menu['startChange'], 580, 80)
     bExit = button(menu['exit'], 930, 490)
@@ -123,6 +155,7 @@ def start_screen():
 
 def game():
     zs = pygame.sprite.Group()
+    music.play(-1)
     game.suns = 5000
     screen.blit(sBackGround, (0, 0))
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
@@ -178,4 +211,4 @@ shields = {'load_screen': load_screen,
 game = Game(5000)
 
 while True:
-    temp = shields['start_screen']()
+    temp = shields['load_screen']()
