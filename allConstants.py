@@ -58,6 +58,8 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
 
 menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141))}
 
+gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
+
 load_screen_sprites = [load_image(f'Graphics/other/animationLoadScreen/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(14)]
 
 cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS),
