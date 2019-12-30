@@ -1,6 +1,6 @@
 import pygame
 import allConstants
-
+import math
 
 class Sunrise(pygame.sprite.Sprite):
 
@@ -79,6 +79,7 @@ class Sun(pygame.sprite.Sprite):
         self.image = image
         self.type = 'sun'
         self.kill = False
+        self.speed = math.sqrt((allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10 - 170) ** 2 + (allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25) ** 2)
 
         self.const = self.image.get_rect()
         self.const.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
@@ -105,9 +106,14 @@ class Sun(pygame.sprite.Sprite):
                 self.numAnim += 0.5
             return self.rect
         elif self.active == False:
-            if self.rect.x > 270 or self.rect.y > 15:
-                self.rect = self.rect.move([-abs(self.const.x - 270) / 10, -abs(self.const.y - 15) / 10])
+            pos = pygame.math.Vector2((self.rect.x, self.rect.y))
+            dir = pygame.math.Vector2((170, 0)) - pos
+            distance = dir.length()
+            if distance > 0:
+                dir = dir / distance
+                pos += dir * min(distance, 15)
+                self.rect.x = pos[0]
+                self.rect.y = pos[1]
                 return self.rect
-            else:
-                self.kill = True
-                del self
+            self.kill = True
+            del self
