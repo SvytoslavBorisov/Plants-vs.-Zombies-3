@@ -8,6 +8,17 @@ from classGame import *
 import sys
 
 
+class button(pygame.sprite.Sprite):
+    def __init__(self, image, x, y):
+        super().__init__()
+        self.image = image
+        self.rect = self.image.get_rect()
+        # вычисляем маску для эффективного сравнения
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = x
+        self.rect.y = y
+
+
 def terminate():
     pygame.quit()
     sys.exit()
@@ -29,22 +40,26 @@ def load_screen():
     return shields['start_screen']()
 
 
+def pause():
+
+    screen.blit(gameMenu['pause'], (350, 50))
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                if 376 <= event.pos[0] <= 732 and 465 <= event.pos[1] <= 529:
+                    return
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
 def start_screen():
     intro_text = [""]
 
-    class buttonStart(pygame.sprite.Sprite):
-        def __init__(self, image, x, y):
-            super().__init__()
-            self.image = image
-            self.rect = self.image.get_rect()
-            # вычисляем маску для эффективного сравнения
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect.x = x
-            self.rect.y = y
-
     fon = pygame.transform.scale(pygame.image.load('Graphics/other/mainMenu.png'), (WIDTH2, HEIGHT2))
     screen.blit(fon, (0, 0))
-    bStart = buttonStart(menu['start'], 580, 80)
+    bStart = button(menu['start'], 580, 80)
     screen.blit(bStart.image, (580, 80))
     font = pygame.font.Font(None, 30)
     text_coord = 50
@@ -62,8 +77,7 @@ def start_screen():
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                bStart1 = buttonStart(pygame.image.load('Graphics/other/pab.png'), *event.pos)
-                if pygame.sprite.collide_rect(bStart1, bStart):
+                if pygame.Rect.collidepoint(bStart.rect, event.pos):
                     return shields['game']()
         pygame.display.flip()
         clock.tick(FPS)
@@ -75,11 +89,14 @@ def game():
     screen.blit(sBackGround, (0, 0))
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
+    bMenu = button(sMenu,  WIDTH2 - 170, 0)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if pygame.Rect.collidepoint(bMenu.rect, event.pos):
+                    shields['pause']()
                 temp = field.get_click(event.pos, panel.checkPlant)
                 if temp[0] == True:
                     panel.checkPlant = ''
@@ -114,13 +131,12 @@ pygame.display.set_icon(pygame.image.load('Graphics/other/icon.png'))
 screen = pygame.display.set_mode(SIZE2)
 clock = pygame.time.Clock()
 
-shields = {'load_screen':load_screen,
-    'start_screen': start_screen,
-    'game': game}
+shields = {'load_screen': load_screen,
+           'start_screen': start_screen,
+           'game': game,
+           'pause': pause}
 
 game = Game(5000)
 
 while True:
-    temp = shields['load_screen']()
-
-
+    temp = shields['start_screen']()
