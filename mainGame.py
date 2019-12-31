@@ -186,8 +186,6 @@ def start_screen():
 
 
 def game():
-    zs = pygame.sprite.Group()
-
     musicGame.play(-1)
     musicGame.set_volume(game.soundVolume)
 
@@ -211,14 +209,14 @@ def game():
                     game.suns = temp[1]
                 panel.get_click(event.pos)
 
-        if random.choice([0] * 44 + [1]):
+        if random.choice([0] * 90 + [1]):
             x = random.randint(0, 2)
             if x == 0:
-                zs.add(classZombie.konusZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.konusZombie(random.randint(0, 4), zombies_hp['konus']))
             elif x == 1:
-                zs.add(classZombie.normalZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.normalZombie(random.randint(0, 4), zombies_hp['normal']))
             else:
-                zs.add(classZombie.bucketZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
 
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))

@@ -15,6 +15,7 @@ SIZE_OF_CARDS = (125, 75)
 pygame.init()
 screen = pygame.display.set_mode(SIZE1)
 FPS = 20
+zs = pygame.sprite.Group()
 
 colors = {'red': pygame.Color("red"),
           'green': pygame.Color("green"),
@@ -85,3 +86,7 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
 musicGame = pygame.mixer.Sound('Sounds/Soundtrack Day Stage.wav')
 #music.play(-1)
+
+zombies_hp = {'normal': 80,
+              'konus': 230,
+              'bucket': 350}
