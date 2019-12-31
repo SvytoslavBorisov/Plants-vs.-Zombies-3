@@ -1,6 +1,7 @@
 import pygame
 import allConstants
 import math
+import random
 
 class Sunrise(pygame.sprite.Sprite):
 
@@ -63,7 +64,7 @@ class Sunrise(pygame.sprite.Sprite):
                 self.glb_cur_frame = 1
                 if self.cur_frame == 10:
                     self.objects.append(
-                        Sun(self.row, self.col, allConstants.plants['sun'], self.rectsNormal[0].x, self.rectsNormal[0].y))
+                        Sun(self.row, self.col, allConstants.plants['sun'], -1, -1))
         i = 0
         while i < len(self.objects):
             if self.objects[i].kill:
@@ -79,25 +80,42 @@ class Sun(pygame.sprite.Sprite):
         self.image = image
         self.type = 'sun'
         self.kill = False
-        self.speed = math.sqrt((allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10 - 170) ** 2 + (allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25) ** 2)
+        self.row = row
+        self.col = col
+        if x == -1 and y == -1:
+            self.const = self.image.get_rect()
+            self.const.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
+            self.const.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
 
-        self.const = self.image.get_rect()
-        self.const.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
-        self.const.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
+            self.rect = self.image.get_rect()
+            self.rect.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
+            self.rect.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
 
-        self.rect = self.image.get_rect()
-        self.rect.x = allConstants.FIELD_CELL_WIDTH * row + allConstants.FIELD_LEFT + 10
-        self.rect.y = allConstants.FIELD_CELL_HEIGHT * col + allConstants.FIELD_TOP - 25
+            self.coordsAnimation = []
+            for i in range(4):
+                self.coordsAnimation.append([2, -4.5])
+            for i in range(4):
+                self.coordsAnimation.append([1, 4.5])
+            for i in range(7):
+                self.coordsAnimation.append([0.5, 4.5])
+            self.numAnim = 0
+            self.active = True
+        else:
+            self.speed = 0
+            print(90)
+            self.const = self.image.get_rect()
+            self.const.x = x
+            self.const.y = y
 
-        self.coordsAnimation = []
-        for i in range(4):
-            self.coordsAnimation.append([2, -4.5])
-        for i in range(4):
-            self.coordsAnimation.append([1, 4.5])
-        for i in range(7):
-            self.coordsAnimation.append([0.5, 4.5])
-        self.numAnim = 0
-        self.active = True
+            self.rect = self.image.get_rect()
+            self.rect.x = x
+            self.rect.y = y
+
+            self.coordsAnimation = []
+            for i in range(random.randint(12, 25)):
+                self.coordsAnimation.append([0, 10])
+            self.numAnim = 0
+            self.active = True
 
     def update(self, *args):
         if self.active:
@@ -106,6 +124,7 @@ class Sun(pygame.sprite.Sprite):
                 self.numAnim += 0.5
             return self.rect
         elif self.active == False:
+
             pos = pygame.math.Vector2((self.rect.x, self.rect.y))
             dir = pygame.math.Vector2((170, 0)) - pos
             distance = dir.length()

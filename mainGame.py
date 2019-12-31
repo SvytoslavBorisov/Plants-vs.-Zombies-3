@@ -3,6 +3,7 @@ from classPlant import *
 from classPanel import Panel
 from classField import Field
 from zombies import classZombie
+from plants import *
 from allConstants import *
 from classGame import *
 import sys
@@ -149,7 +150,7 @@ def start_screen():
                     screen.blit(bStartChange.image, (580, 80))
                     musicMainMenu.stop()
                     return shields['game']()
-                elif 788 <= event.pos[0] <= 902 and 186 <= event.pos[1] <= 218:
+                elif 788 <= event.pos[0] <= 902 and 175 <= event.pos[1] <= 218:
                     screen.blit(bStartChange.image, (580, 80))
                     musicMainMenu.stop()
                     return shields['game']()
@@ -186,7 +187,6 @@ def start_screen():
 
 
 def game():
-    zs = pygame.sprite.Group()
 
     musicGame.play(-1)
     musicGame.set_volume(game.soundVolume)
@@ -196,7 +196,11 @@ def game():
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
     bMenu = button(gamesSprites['buttonMenu'],  WIDTH2 - 170, 0)
+    objects = []
     while True:
+        game.time += 1
+        if (game.time + 1) % 120 == 0:
+            objects.append(classSunrise.Sun(0, 0, plants['sun'], random.randint(200, 900), -100))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
@@ -204,31 +208,42 @@ def game():
                 #print(event.pos)
                 if pygame.Rect.collidepoint(bMenu.rect, event.pos):
                     shields['pause']()
-                temp = field.get_click(event.pos, panel.checkPlant)
+                temp = field.get_click(event.pos, panel.checkPlant, objects)
+                objects = temp[2]
                 if temp[0] == True:
                     panel.checkPlant = ''
                     panel.returnSostoynie()
                     game.suns = temp[1]
                 panel.get_click(event.pos)
 
-        if random.choice([0] * 44 + [1]):
+        if random.choice([0] * 90 + [1]):
             x = random.randint(0, 2)
             if x == 0:
-                zs.add(classZombie.konusZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.konusZombie(random.randint(0, 4), zombies_hp['konus']))
             elif x == 1:
-                zs.add(classZombie.normalZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.normalZombie(random.randint(0, 4), zombies_hp['normal']))
             else:
-                zs.add(classZombie.bucketZombie(random.randint(0, 4), 100))
+                zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
 
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))
         screen.blit(gamesSprites['panelSun'], (170, 0))
+
         textSun = fontSun.render(str(game.suns), True, colors['black'])
         screen.blit(textSun, (250, 15))
         field.render()
         panel.render()
         zs.update()
         zs.draw(screen)
+        i = 0
+        while i < len(objects):
+            objects[i].update()
+            if objects[i].kill:
+                del objects[i]
+                game.suns += 25
+            else:
+                screen.blit(objects[i].image, (objects[i].rect.x, objects[i].rect.y))
+                i += 1
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -245,7 +260,7 @@ shields = {'load_screen': load_screen,
            'game': game,
            'pause': pause}
 
-game = Game(5000)
+game = Game(50)
 musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 

@@ -67,7 +67,7 @@ class Panel:
     def get_cell(self, mouse_pos):
         self.data.clear()
         if self.left < mouse_pos[0] < self.left + self.width * self.cell_width \
-                and self.top < mouse_pos[1] < self.top + self.height * self.cell_height + self.step:
+                and self.top < mouse_pos[1] < self.top + self.height * self.cell_height + self.height * self.step:
             self.data.append((mouse_pos[0] - self.left) // self.cell_width)
             self.data.append((mouse_pos[1] - self.top) // (self.cell_height + self.step))
             return self.data

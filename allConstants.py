@@ -15,6 +15,7 @@ SIZE_OF_CARDS = (125, 75)
 pygame.init()
 screen = pygame.display.set_mode(SIZE1)
 FPS = 20
+zs = pygame.sprite.Group()
 
 colors = {'red': pygame.Color("red"),
           'green': pygame.Color("green"),
@@ -48,6 +49,7 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
           'gatlingPea': [load_image(f'Graphics/plants/animationGatlingPea/{i}.png', SIZE_OF_PLANT) for i in range(23)],
           'gatlingPeaShoot': [load_image(f'Graphics/plants/animationGatlingPeaShoot/{i}.png', SIZE_OF_PLANT) for i in range(14)],
           'pea': load_image(f'Graphics/plants/animationGatlingPeaShoot/pea.png', (27, 27)),
+          'pea1': load_image(f'Graphics/plants/animationGatlingPeaShoot/pea.png', (9, 27)),
           'sunrise': [load_image(f'Graphics/plants/animationSunrise/{i}.png', SIZE_OF_PLANT) for i in range(15)],
           'sunriseGiveSun': [load_image(f'Graphics/plants/animationSunriseGiveSun/{i}.png', SIZE_OF_PLANT) for i in range(14)],
           'sun': load_image(f'Graphics/plants/animationSunriseGiveSun/sun.png', (70, 70)),
@@ -85,3 +87,7 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
 musicGame = pygame.mixer.Sound('Sounds/Soundtrack Day Stage.wav')
 #music.play(-1)
+
+zombies_hp = {'normal': 80,
+              'konus': 230,
+              'bucket': 350}

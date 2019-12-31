@@ -50,20 +50,25 @@ class Field:
         for x in self.objects:
             screen.blit(*x[1])
 
-    def get_click(self, mouse_pos, checkPlant):
+    def get_click(self, mouse_pos, checkPlant, objec):
         cell = self.get_cell(mouse_pos)
         i = 0
-        while i < len(self.objects):
-            if self.objects[i][0].type == 'sun' and self.objects[i][0].rect.collidepoint(mouse_pos):
+        while i < len(self.objects) + len(objec):
+            if i < len(self.objects) and self.objects[i][0].type == 'sun' and self.objects[i][0].rect.collidepoint(mouse_pos):
                 self.board[self.objects[i][2]][self.objects[i][3]].objects[self.objects[i][4]].active = False
                 self.objects.pop(i)
+            elif i >= len(self.objects) and objec[i - len(self.objects)].type == 'sun' and objec[i - len(self.objects)].rect.collidepoint(mouse_pos):
+                print(1)
+                objec[i - len(self.objects)].active = False
+                print(2)
+                i += 1
             else:
                 i += 1
         if cell and checkPlant:
             temp = self.on_click(cell, checkPlant)
             if temp[0]:
-                return [True, self.game.suns - temp[1]]
-        return [False, self.game.suns]
+                return [True, self.game.suns - temp[1], objec]
+        return [False, self.game.suns, objec]
 
     def on_click(self, cell, checkPlant):
         if self.board[cell[0]][cell[1]] == '':

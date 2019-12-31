@@ -9,6 +9,8 @@ class GatlingPea(pygame.sprite.Sprite):
     def __init__(self, row, col):
         super().__init__()
 
+        self.hp = 100
+
         spritesNormal = plants['gatlingPea']
         spritesShoot = plants['gatlingPeaShoot']
 
@@ -61,6 +63,12 @@ class GatlingPea(pygame.sprite.Sprite):
                 if self.cur_frame == 10:
                     self.objects.append(
                         Pea(self.row, self.col, plants['pea'], self.rectsNormal[0].x, self.rectsNormal[0].y))
+        i = 0
+        while i < len(self.objects):
+            if self.objects[i].kill:
+                del self.objects[i]
+            else:
+                i += 1
 
 
 class Pea(pygame.sprite.Sprite):
@@ -72,10 +80,19 @@ class Pea(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = FIELD_CELL_WIDTH * row + FIELD_LEFT + 55
         self.rect.y = FIELD_CELL_HEIGHT * col + FIELD_TOP + 15
+        self.row = col
+        self.col = row
+        self.kill = False
 
     def update(self, *args):
         self.rect = self.rect.move(10, 0)
         if self.rect.x > WIDTH2:
-            self.kill()
+            self.kill = True
             return None
+        for z in zs:
+            if self.rect.x - 80 >= z.x >= self.rect.x - 90 and self.row == z.row:
+                z.hp -= 10
+                self.kill = True
+                screen.blit(plants['pea1'], (self.rect.x + 10, self.rect.y))
+                return None
         return self.rect
