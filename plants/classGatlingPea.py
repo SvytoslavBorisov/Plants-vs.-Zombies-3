@@ -48,7 +48,6 @@ class GatlingPea(pygame.sprite.Sprite):
                 self.glb_len = len(self.images_listNormal)
                 self.image = self.images_listNormal[self.cur_frame]
                 self.glb_cur_frame = 0
-
         else:
             self.cur_frame = (self.cur_frame + 1) % self.glb_len
             if self.cur_frame == 0:

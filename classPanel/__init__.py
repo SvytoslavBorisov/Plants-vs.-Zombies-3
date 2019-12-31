@@ -33,7 +33,7 @@ class Panel:
                                                self.cell_height * i + self.top + self.step * i,
                                                self.cell_width,
                                                self.cell_height))
-                        self.screen.blit(punkteer, (self.cell_width * j + self.left,
+                        self.screen.blit(gamesSprites['punkteer'], (self.cell_width * j + self.left,
                                                self.cell_height * i + self.top + self.step * i,
                                                self.cell_width,
                                                self.cell_height))
