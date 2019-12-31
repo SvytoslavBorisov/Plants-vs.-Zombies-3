@@ -9,19 +9,9 @@ class justZombie(pygame.sprite.Sprite):
         self.x = WIDTH2
         self.y = row * FIELD_CELL_HEIGHT + 25
         self.cur = 0
-        self.row = row
 
-    def update(self):
-        self.x -= 1
-        self.image = self.data[self.cur]
-        self.rect.x = self.x
-        self.cur += 1
-        self.cur %= len(self.data)
-        if self.x < 140 or self.hp <= 0:
-            self.kill()
-
-
-class konusZombie(justZombie):
+    
+class konusZombie(justZombie):        
     def __init__(self, row, hp):
         super().__init__(row, hp)
         self.data = zombies['konus']
@@ -35,14 +25,13 @@ class konusZombie(justZombie):
         self.rect.y = self.y
 
     def update(self):
-        super().update()
-        only = zombies_hp['konus'] - zombies_hp['normal']
-        if only // 3 * 2 >= self.hp - zombies_hp['normal']:
-            self.data = self.dataDamage1
-        if only // 3 >= self.hp - zombies_hp['normal']:
-            self.data = self.dataDamage2
-        if self.hp <= zombies_hp['normal']:
-            self.data = self.dataDamage3
+        self.x -= 0.6
+        self.image = self.data[self.cur]
+        self.rect.x = self.x
+        self.cur += 1
+        self.cur %= len(self.data)
+        if self.x < 140:
+            self.kill()
 
 
 class normalZombie(justZombie):
@@ -54,23 +43,30 @@ class normalZombie(justZombie):
         self.rect.x = self.x
         self.rect.y = self.y
 
+    def update(self):
+        self.x -= 0.6
+        self.image = self.data[self.cur]
+        self.rect.x = self.x
+        self.cur += 1
+        self.cur %= len(self.data)
+        if self.x < 140:
+            self.kill()
+
 
 class bucketZombie(justZombie):
     def __init__(self, row, hp):
         super().__init__(row, hp)
-        self.data = self.dataDamage1 = self.dataDamage2 = zombies['bucket']
-        self.dataDamage3 = zombies['normal']
+        self.data = zombies['bucket']
         self.image = self.data[self.cur]
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
 
     def update(self):
-        super().update()
-        only = zombies_hp['bucket'] - zombies_hp['normal']
-        if only // 3 * 2 >= self.hp - zombies_hp['normal']:
-            self.data = self.dataDamage1
-        if only // 3 >= self.hp - zombies_hp['normal']:
-            self.data = self.dataDamage2
-        if self.hp <= zombies_hp['normal']:
-            self.data = self.dataDamage3
+        self.x -= 0.6
+        self.image = self.data[self.cur]
+        self.rect.x = self.x
+        self.cur += 1
+        self.cur %= len(self.data)
+        if self.x < 140:
+            self.kill()
