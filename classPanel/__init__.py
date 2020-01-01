@@ -52,12 +52,25 @@ class Panel:
                             if self.board[j][i][4] <= self.board[j][i][3] + 10:
                                 self.board[j][i][3] = self.board[j][i][4]
                             else:
-                                scr = pygame.Surface((self.cell_width - 5, 75 / self.board[j][i][4] * self.board[j][i][3]))
+                                scr = pygame.Surface((self.cell_width - 7, 75 / self.board[j][i][4] * self.board[j][i][3]))
                                 scr.set_alpha(160)
                                 scr.fill(pygame.Color(64, 64, 64))
                                 self.screen.blit(scr, (self.left + j * self.cell_width + 5,
                                                        self.top + i * self.cell_height + self.step * i + 75 -
                                                        75 / self.board[j][i][4] * self.board[j][i][3] - 2))
+
+    def mouse_move(self, mouse_pos):
+        cell = self.get_cell(mouse_pos)
+        if cell:
+            if self.game.suns < self.board[cell[0]][cell[1]][1]:
+                screen.blit(descriptionNoSun[self.board[cell[0]][cell[1]][0]], (PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
+            elif self.board[cell[0]][cell[1]][4] != self.board[cell[0]][cell[1]][3]:
+                screen.blit(descriptionNoTime[self.board[cell[0]][cell[1]][0]], (
+                PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
+            else:
+                screen.blit(description[self.board[cell[0]][cell[1]][0]], (
+                PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
+
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)

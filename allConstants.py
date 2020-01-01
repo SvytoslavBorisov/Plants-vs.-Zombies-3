@@ -13,7 +13,7 @@ SIZE_OF_PLANT = (80, 80)
 SIZE_OF_CARDS = (125, 75)
 
 pygame.init()
-screen = pygame.display.set_mode(SIZE1)
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 FPS = 20
 zs = pygame.sprite.Group()
 
@@ -77,6 +77,27 @@ cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS
          'potatoBomb': load_image('Graphics/cards/potatoBomb.png', SIZE_OF_CARDS),
          'squash': load_image('Graphics/cards/squash.png', SIZE_OF_CARDS),
          'cabbage': load_image('Graphics/cards/cabbage.png', SIZE_OF_CARDS)}
+
+description = {'gatlingPea': load_image('Graphics/description/gatlingPea.png', (88, 16)),
+         'sunrise': load_image('Graphics/description/sunrise.png', (88, 16)),
+         'wallNut': load_image('Graphics/description/wallNut.png', (88, 16)),
+         'potatoBomb': load_image('Graphics/description/potatoBomb.png', (88, 16)),
+         'squash': load_image('Graphics/description/squash.png', (88, 16)),
+         'cabbage': load_image('Graphics/description/gatlingPea.png', (88, 16))}
+
+descriptionNoSun = {'gatlingPea': load_image('Graphics/description/gatlingPeaNoSun.png', (88, 32)),
+         'sunrise': load_image('Graphics/description/sunriseNoSun.png', (88, 32)),
+         'wallNut': load_image('Graphics/description/wallNutNoSun.png', (88, 32)),
+         'potatoBomb': load_image('Graphics/description/potatoBombNoSun.png', (88, 32)),
+         'squash': load_image('Graphics/description/squashNoSun.png', (88, 32)),
+         'cabbage': load_image('Graphics/description/gatlingPeaNoSun.png', (88, 32))}
+
+descriptionNoTime = {'gatlingPea': load_image('Graphics/description/gatlingPeaNoTime.png', (88, 32)),
+         'sunrise': load_image('Graphics/description/sunriseNoTime.png', (88, 32)),
+         'wallNut': load_image('Graphics/description/wallNutNoTime.png', (88, 32)),
+         'potatoBomb': load_image('Graphics/description/potatoBombNoTime.png', (88, 32)),
+         'squash': load_image('Graphics/description/squashNoTime.png', (88, 32)),
+         'cabbage': load_image('Graphics/description/sunriseNoTime.png', (88, 32))}
 
 zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'konusDamage1': [load_image(f'Graphics/zombies/animationKonusLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],

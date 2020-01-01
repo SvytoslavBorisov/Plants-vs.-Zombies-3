@@ -101,8 +101,6 @@ class Sun(pygame.sprite.Sprite):
             self.numAnim = 0
             self.active = True
         else:
-            self.speed = 0
-            print(90)
             self.const = self.image.get_rect()
             self.const.x = x
             self.const.y = y

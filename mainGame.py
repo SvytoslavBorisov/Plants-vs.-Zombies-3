@@ -186,13 +186,17 @@ def start_screen():
         clock.tick(FPS)
 
 
+def almanah():
+    pass
+
+
 def game():
 
     musicGame.play(-1)
     musicGame.set_volume(game.soundVolume)
 
     game.suns = 5000
-    screen.blit(gamesSprites['yardDay'], (0, 0))
+    zs.empty()
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
     bMenu = button(gamesSprites['buttonMenu'],  WIDTH2 - 170, 0)
@@ -233,10 +237,17 @@ def game():
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))
         screen.blit(gamesSprites['panelSun'], (170, 0))
+        field.render()
+
+        event = pygame.mouse.get_pos()
+        if flgPlant:
+            field.mouse_move(event)
+            screen.blit(plants[panel.checkPlant[0]][0], (event[0] - 25, event[1] - 25))
+        panel.mouse_move(event)
 
         textSun = fontSun.render(str(game.suns), True, colors['black'])
         screen.blit(textSun, (250, 15))
-        field.render()
+
         panel.render()
         zs.update()
         zs.draw(screen)
@@ -249,9 +260,6 @@ def game():
             else:
                 screen.blit(objects[i].image, (objects[i].rect.x, objects[i].rect.y))
                 i += 1
-
-        if flgPlant:
-            screen.blit(plants[panel.checkPlant[0]][0], (event.pos[0] - 20, event.pos[1] - 20))
 
         pygame.display.flip()
         clock.tick(FPS)
@@ -267,11 +275,12 @@ clock = pygame.time.Clock()
 shields = {'load_screen': load_screen,
            'start_screen': start_screen,
            'game': game,
-           'pause': pause}
+           'pause': pause,
+           'almanah': almanah}
 
 game = Game(50)
 musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 
 while True:
-    temp = shields['game']()
+    temp = shields['start_screen']()

@@ -50,6 +50,19 @@ class Field:
         for x in self.objects:
             screen.blit(*x[1])
 
+    def mouse_move(self, mouse_pos):
+        cell = self.get_cell(mouse_pos)
+        if cell:
+            scr = pygame.Surface((FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT * FIELD_HEIGHT))
+            scr.set_alpha(128)
+            scr.fill(pygame.Color(255, 255, 0))
+            screen.blit(scr, (FIELD_LEFT + FIELD_CELL_WIDTH * cell[0], FIELD_TOP))
+
+            scr = pygame.Surface((FIELD_CELL_WIDTH * FIELD_WIDTH, FIELD_CELL_HEIGHT))
+            scr.set_alpha(128)
+            scr.fill(pygame.Color(255, 255, 0))
+            screen.blit(scr, (FIELD_LEFT, FIELD_TOP + FIELD_CELL_HEIGHT * cell[1]))
+
     def get_click(self, mouse_pos, checkPlant, objec):
         cell = self.get_cell(mouse_pos)
         i = 0
@@ -58,9 +71,7 @@ class Field:
                 self.board[self.objects[i][2]][self.objects[i][3]].objects[self.objects[i][4]].active = False
                 self.objects.pop(i)
             elif i >= len(self.objects) and objec[i - len(self.objects)].type == 'sun' and objec[i - len(self.objects)].rect.collidepoint(mouse_pos):
-                print(1)
                 objec[i - len(self.objects)].active = False
-                print(2)
                 i += 1
             else:
                 i += 1
