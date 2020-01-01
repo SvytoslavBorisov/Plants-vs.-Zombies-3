@@ -13,7 +13,7 @@ SIZE_OF_PLANT = (80, 80)
 SIZE_OF_CARDS = (125, 75)
 
 pygame.init()
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+screen = pygame.display.set_mode(SIZE2)
 FPS = 20
 zs = pygame.sprite.Group()
 

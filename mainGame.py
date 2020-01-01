@@ -278,7 +278,7 @@ shields = {'load_screen': load_screen,
            'pause': pause,
            'almanah': almanah}
 
-game = Game(50)
+game = Game(500)
 musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 

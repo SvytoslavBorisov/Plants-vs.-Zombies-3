@@ -53,7 +53,7 @@ class Panel:
                                 self.board[j][i][3] = self.board[j][i][4]
                             else:
                                 scr = pygame.Surface((self.cell_width - 7, 75 / self.board[j][i][4] * self.board[j][i][3]))
-                                scr.set_alpha(160)
+                                scr.set_alpha(159)
                                 scr.fill(pygame.Color(64, 64, 64))
                                 self.screen.blit(scr, (self.left + j * self.cell_width + 5,
                                                        self.top + i * self.cell_height + self.step * i + 75 -
