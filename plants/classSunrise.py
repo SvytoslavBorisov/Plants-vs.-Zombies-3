@@ -112,8 +112,8 @@ class Sun(pygame.sprite.Sprite):
             self.rect.y = y
 
             self.coordsAnimation = []
-            for i in range(random.randint(12, 25)):
-                self.coordsAnimation.append([0, 10])
+            for i in range(random.randint(24, 50)):
+                self.coordsAnimation.append([0, 5])
             self.numAnim = 0
             self.active = True
 
@@ -130,7 +130,7 @@ class Sun(pygame.sprite.Sprite):
             distance = dir.length()
             if distance > 0:
                 dir = dir / distance
-                pos += dir * min(distance, 15)
+                pos += dir * min(distance, 20)
                 self.rect.x = pos[0]
                 self.rect.y = pos[1]
                 return self.rect

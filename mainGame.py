@@ -197,6 +197,7 @@ def game():
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
     bMenu = button(gamesSprites['buttonMenu'],  WIDTH2 - 170, 0)
     objects = []
+    flgPlant = False
     while True:
         game.time += 1
         if (game.time + 1) % 120 == 0:
@@ -212,9 +213,13 @@ def game():
                 objects = temp[2]
                 if temp[0] == True:
                     panel.checkPlant = ''
-                    panel.returnSostoynie()
+                    panel.returnSostoynie(True)
                     game.suns = temp[1]
+                    flgPlant = False
                 panel.get_click(event.pos)
+                if panel.checkPlant:
+                    screen.blit(plants[panel.checkPlant[0]][0], event.pos)
+                    flgPlant = True
 
         if random.choice([0] * 90 + [1]):
             x = random.randint(0, 2)
@@ -244,6 +249,10 @@ def game():
             else:
                 screen.blit(objects[i].image, (objects[i].rect.x, objects[i].rect.y))
                 i += 1
+
+        if flgPlant:
+            screen.blit(plants[panel.checkPlant[0]][0], (event.pos[0] - 20, event.pos[1] - 20))
+
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -265,4 +274,4 @@ musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 
 while True:
-    temp = shields['start_screen']()
+    temp = shields['game']()

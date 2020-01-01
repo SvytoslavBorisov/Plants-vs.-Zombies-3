@@ -82,6 +82,8 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
            'konusDamage1': [load_image(f'Graphics/zombies/animationKonusLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'konusDamage2': [load_image(f'Graphics/zombies/animationKonusBigDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'bucket': [load_image(f'Graphics/zombies/animationbucket/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'bucketDamage1': [load_image(f'Graphics/zombies/animationBucketLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'bucketDamage2': [load_image(f'Graphics/zombies/animationBucketBigDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'normal': [load_image(f'Graphics/zombies/animationNormal/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
 
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
