@@ -278,7 +278,6 @@ def almanahChange():
 
 
 def game():
-
     musicGame.play(-1)
     musicGame.set_volume(game.soundVolume)
 
@@ -322,6 +321,15 @@ def game():
                 zs.add(classZombie.normalZombieWithFlag(random.randint(0, 4), zombies_hp['normal']))
             else:
                 zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
+
+        for z in zs:
+            k = (z.x - FIELD_LEFT - 60) // FIELD_CELL_WIDTH + 2
+            if 0 <= k < FIELD_WIDTH and field.board[k][z.row] != '':
+                z.x += 1
+                field.hp[k][z.row] -= 1
+                if field.hp[k][z.row] < 0:
+                    field.hp[k][z.row] = -1
+                    field.board[k][z.row] = ''
 
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))
