@@ -36,6 +36,16 @@ PANEL_CELL_HEIGHT = 75
 PANEL_LEFT = 30
 PANEL_TOP = 75
 PANEL_STEP = 10
+
+ALMANAH_WIDTH = 6
+ALMANAH_HEIGHT = 4
+ALMANAH_CELL_WIDTH = 125
+ALMANAH_CELL_HEIGHT = 75
+ALMANAH_LEFT = 40
+ALMANAH_TOP = 95
+ALMANAH_STEP_TOP = 5
+ALMANAH_STEP_LEFT = 8
+
 fontSun = pygame.font.Font('freesansbold.ttf', 30)
 
 gamesSprites = {'yardDay':    pygame.image.load('Graphics/other/Frontyard.jpg').convert(),
@@ -105,7 +115,25 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
            'bucket': [load_image(f'Graphics/zombies/animationbucket/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'bucketDamage1': [load_image(f'Graphics/zombies/animationBucketLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'bucketDamage2': [load_image(f'Graphics/zombies/animationBucketBigDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
-           'normal': [load_image(f'Graphics/zombies/animationNormal/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
+           'normal': [load_image(f'Graphics/zombies/animationNormal/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'normalDamage1': [load_image(f'Graphics/zombies/animationNormalLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
+           'normalWithFlag': [load_image(f'Graphics/zombies/animationNormalWithFlag/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
+
+almanac = {'normal': load_image('Graphics/other/almanah1.png', (118, 110)),
+           'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
+           'change': load_image('Graphics/other/almanah.png', (118, 110)),
+           'viewPlant': load_image('Graphics/other/viewPlantButton.png', (199, 38)),
+           'viewZombies': load_image('Graphics/other/viewZombiesButton.png', (261, 39)),
+           'close': load_image('Graphics/other/closeAlmanahButton.png', (109, 22)),
+           'almanahMainMenu': load_image('Graphics/other/almanahMainMenu.png', SIZE2),
+           'almanahMainMenuZombie': load_image('Graphics/other/almanahMainMenuZombie.png', SIZE2),
+           'closeMainMenu': load_image('Graphics/other/almanahMainMenuClose.png', (170, 51)),
+           'backMainMenu': load_image('Graphics/other/almanahMainMenuBack.png', (171, 51)),
+           'gatlingPea': load_image('Graphics/description/gatlingPeaAlmanah.png', (417, 235)),
+           'sunrise': load_image('Graphics/description/sunriseAlmanah.png', (417, 235)),
+           'wallNut': load_image('Graphics/description/wallNutAlmanah.png', (417, 235)),
+           'potatoBomb': load_image('Graphics/description/potatoBombAlmanah.png', (417, 235)),
+           'squash': load_image('Graphics/description/squashAlmanah.png', (417, 235))}
 
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
 musicGame = pygame.mixer.Sound('Sounds/Soundtrack Day Stage.wav')

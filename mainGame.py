@@ -2,6 +2,7 @@ import pygame
 from classPlant import *
 from classPanel import Panel
 from classField import Field
+from classAlmanahPlant import AlmanahPlant
 from zombies import classZombie
 from plants import *
 from allConstants import *
@@ -125,6 +126,7 @@ def start_screen():
     screen.blit(bExit.image, (930, 505))
     flgStartB = False
     flgExitB = False
+    flgAlmanahB = False
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -144,8 +146,12 @@ def start_screen():
                     flgExitB = True
                 else:
                     flgExitB = False
+                if 600 <= event.pos[0] <= 718 and 380 <= event.pos[1] <= 490:
+                    flgAlmanahB = True
+                else:
+                    flgAlmanahB = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos)
+                #print(event.pos)
                 if 583 <= event.pos[0] <= 921 and 109 <= event.pos[1] <= 175:
                     screen.blit(bStartChange.image, (580, 80))
                     musicMainMenu.stop()
@@ -165,8 +171,14 @@ def start_screen():
                 elif 930 <= event.pos[0] <= 1000 and 512 <= event.pos[1] <= 535:
                     musicMainMenu.stop()
                     terminate()
+                elif 600 <= event.pos[0] <= 718 and 380 <= event.pos[1] <= 490:
+                    return shields['almanahChange']()
 
         screen.blit(mainMenu[indexAnimationMainMenu // 2 - 1], (0, 0))
+        if flgAlmanahB:
+            screen.blit(almanac['change'], (600, 380))
+        else:
+            screen.blit(almanac['normal'], (600, 380))
         if indexAnimationMainMenu >= len(mainMenu) * 2:
             indexAnimationMainMenu = 0
         else:
@@ -186,8 +198,83 @@ def start_screen():
         clock.tick(FPS)
 
 
-def almanah():
-    pass
+def almanahMainMenuZombie():
+
+    screen.blit(almanac['almanahMainMenuZombie'], (0, 0))
+    screen.blit(almanac['closeMainMenu'], (848, 543))
+    screen.blit(almanac['backMainMenu'], (568, 543))
+
+    panel = AlmanahPlant(ALMANAH_WIDTH, ALMANAH_HEIGHT, ALMANAH_CELL_WIDTH, ALMANAH_CELL_HEIGHT, ALMANAH_LEFT, ALMANAH_TOP, ALMANAH_STEP_TOP, ALMANAH_STEP_LEFT, screen)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                panel.get_click(event.pos)
+                if 848 <= event.pos[0] <= 1019 and 543 <= event.pos[1] <= 594:
+                    return shields['start_screen']()
+                elif 568 <= event.pos[0] <= 738 and 543 <= event.pos[1] <= 594:
+                    return shields['almanahChange']()
+
+        screen.blit(almanac['almanahMainMenuZombie'], (0, 0))
+        screen.blit(almanac['closeMainMenu'], (848, 543))
+        screen.blit(almanac['backMainMenu'], (568, 543))
+
+        panel.render()
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+def almanahMainMenuPlant():
+
+    screen.blit(almanac['almanahMainMenu'], (0, 0))
+    screen.blit(almanac['closeMainMenu'], (848, 543))
+    screen.blit(almanac['backMainMenu'], (568, 543))
+
+    panel = AlmanahPlant(ALMANAH_WIDTH, ALMANAH_HEIGHT, ALMANAH_CELL_WIDTH, ALMANAH_CELL_HEIGHT, ALMANAH_LEFT, ALMANAH_TOP, ALMANAH_STEP_TOP, ALMANAH_STEP_LEFT, screen)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                panel.get_click(event.pos)
+                if 848 <= event.pos[0] <= 1019 and 543 <= event.pos[1] <= 594:
+                    return shields['start_screen']()
+                elif 568 <= event.pos[0] <= 738 and 543 <= event.pos[1] <= 594:
+                    return shields['almanahChange']()
+
+        screen.blit(almanac['almanahMainMenu'], (0, 0))
+        screen.blit(almanac['closeMainMenu'], (848, 543))
+        screen.blit(almanac['backMainMenu'], (568, 543))
+
+        panel.render()
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+def almanahChange():
+
+    screen.blit(almanac['almanahMenu'], (0, 0))
+    screen.blit(almanac['viewPlant'], (166, 346))
+    screen.blit(almanac['viewZombies'], (625, 346))
+    screen.blit(almanac['close'], (868, 568))
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                terminate()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if 868 <= event.pos[0] <= 977 and 568 <= event.pos[1] <= 590:
+                    return shields['start_screen']()
+                elif 166 <= event.pos[0] <= 365 and 346 <= event.pos[1] <= 384:
+                    return shields['almanahMainMenuPlant']()
+                elif 625 <= event.pos[0] <= 824 and 346 <= event.pos[1] <= 384:
+                    return shields['almanahMainMenuZombie']()
+
+        pygame.display.flip()
+        clock.tick(FPS)
 
 
 def game():
@@ -226,11 +313,13 @@ def game():
                     flgPlant = True
 
         if random.choice([0] * 90 + [1]):
-            x = random.randint(0, 2)
+            x = random.randint(0, 3)
             if x == 0:
                 zs.add(classZombie.konusZombie(random.randint(0, 4), zombies_hp['konus']))
             elif x == 1:
                 zs.add(classZombie.normalZombie(random.randint(0, 4), zombies_hp['normal']))
+            elif x == 2:
+                zs.add(classZombie.normalZombieWithFlag(random.randint(0, 4), zombies_hp['normal']))
             else:
                 zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
 
@@ -238,6 +327,7 @@ def game():
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))
         screen.blit(gamesSprites['panelSun'], (170, 0))
         field.render()
+        panel.render()
 
         event = pygame.mouse.get_pos()
         if flgPlant:
@@ -248,7 +338,6 @@ def game():
         textSun = fontSun.render(str(game.suns), True, colors['black'])
         screen.blit(textSun, (250, 15))
 
-        panel.render()
         zs.update()
         zs.draw(screen)
         i = 0
@@ -276,7 +365,9 @@ shields = {'load_screen': load_screen,
            'start_screen': start_screen,
            'game': game,
            'pause': pause,
-           'almanah': almanah}
+           'almanahChange': almanahChange,
+           'almanahMainMenuPlant': almanahMainMenuPlant,
+           'almanahMainMenuZombie': almanahMainMenuZombie}
 
 game = Game(500)
 musicMainMenu.play(-1)

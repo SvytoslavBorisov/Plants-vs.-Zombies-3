@@ -55,6 +55,16 @@ class normalZombie(justZombie):
         self.rect.y = self.y
 
 
+class normalZombieWithFlag(justZombie):
+    def __init__(self, row, hp):
+        super().__init__(row, hp)
+        self.data = zombies['normalWithFlag']
+        self.image = self.data[self.cur]
+        self.rect = self.image.get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+
 class bucketZombie(justZombie):
     def __init__(self, row, hp):
         super().__init__(row, hp)
