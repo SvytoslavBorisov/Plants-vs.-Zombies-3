@@ -3,6 +3,7 @@ from classPlant import *
 from classPanel import Panel
 from classField import Field
 from classAlmanahPlant import AlmanahPlant
+from classAlmanahZombie import AlmanahZombie
 from zombies import classZombie
 from plants import *
 from allConstants import *
@@ -178,7 +179,7 @@ def start_screen():
         if flgAlmanahB:
             screen.blit(almanac['change'], (600, 380))
         else:
-            screen.blit(almanac['normal'], (600, 380))
+            screen.blit(almanac['normal1'], (600, 380))
         if indexAnimationMainMenu >= len(mainMenu) * 2:
             indexAnimationMainMenu = 0
         else:
@@ -204,7 +205,8 @@ def almanahMainMenuZombie():
     screen.blit(almanac['closeMainMenu'], (848, 543))
     screen.blit(almanac['backMainMenu'], (568, 543))
 
-    panel = AlmanahPlant(ALMANAH_WIDTH, ALMANAH_HEIGHT, ALMANAH_CELL_WIDTH, ALMANAH_CELL_HEIGHT, ALMANAH_LEFT, ALMANAH_TOP, ALMANAH_STEP_TOP, ALMANAH_STEP_LEFT, screen)
+    panel = AlmanahZombie(ALMANAH_ZOMBIE_WIDTH, ALMANAH_ZOMBIE_HEIGHT, ALMANAH_ZOMBIE_CELL_WIDTH, ALMANAH_ZOMBIE_CELL_HEIGHT,
+                          ALMANAH_ZOMBIE_LEFT, ALMANAH_ZOMBIE_TOP, ALMANAH_ZOMBIE_STEP_TOP, ALMANAH_ZOMBIE_STEP_LEFT, screen)
 
     while True:
         for event in pygame.event.get():
@@ -278,7 +280,6 @@ def almanahChange():
 
 
 def game():
-
     musicGame.play(-1)
     musicGame.set_volume(game.soundVolume)
 
@@ -322,6 +323,15 @@ def game():
                 zs.add(classZombie.normalZombieWithFlag(random.randint(0, 4), zombies_hp['normal']))
             else:
                 zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
+
+        for z in zs:
+            k = int((z.x - FIELD_LEFT - 60) // FIELD_CELL_WIDTH + 2)
+            if 0 <= k < FIELD_WIDTH and field.board[k][z.row] != '':
+                z.x += 1
+                field.hp[k][z.row] -= 1
+                if field.hp[k][z.row] < 0:
+                    field.hp[k][z.row] = -1
+                    field.board[k][z.row] = ''
 
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))

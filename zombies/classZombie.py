@@ -12,7 +12,7 @@ class justZombie(pygame.sprite.Sprite):
         self.row = row
 
     def update(self):
-        self.x -= 1
+        self.x -= 0.5
         self.image = self.data[self.cur]
         self.rect.x = self.x
         self.cur += 1

@@ -2,7 +2,7 @@ import pygame
 from allConstants import *
 
 
-class AlmanahPlant:
+class AlmanahZombie:
 
     def __init__(self, width, height, cell_width, cell_height, left, top, step_top, step_left, screen):
         self.width = width
@@ -17,12 +17,11 @@ class AlmanahPlant:
         self.step_left = step_left
         self.board = []
         self.board.append([])
-        self.board[0].append(['gatlingPea', False])
-        self.board[0].append(['sunrise', False])
-        self.board[0].append(['wallNut', False])
-        self.board[0].append(['potatoBomb', False])
+        self.board[0].append(['normal', False])
+        self.board[0].append(['normalWithFlag', False])
+        self.board[0].append(['bucket', False])
         self.board.append([])
-        self.board[1].append(['squash', False])
+        self.board[1].append(['konus', False])
         self.data = []
 
     def render(self):
@@ -33,18 +32,14 @@ class AlmanahPlant:
                                                                   self.cell_height * i + self.top + self.step_top * i,
                                                                   self.cell_width,
                                                                   self.cell_height))
-                    self.screen.blit(gamesSprites['punkteer'], (self.cell_width * j + self.left + self.step_left * j,
-                                                                  self.cell_height * i + self.top + self.step_top * i,
-                                                                  self.cell_width,
-                                                                  self.cell_height))
                 else:
                     self.screen.blit(cards[self.board[i][j][0]], (self.cell_width * j + self.left + self.step_left * j,
                                                                   self.cell_height * i + self.top + self.step_top * i,
                                                                   self.cell_width,
                                                                   self.cell_height))
         if self.checkPlant[0] != []:
-            self.screen.blit(self.checkPlant[0][self.checkPlant[2]], (750, 150))
-            self.screen.blit(almanac[self.checkPlant[3]], (588, 302))
+            self.screen.blit(self.checkPlant[0][self.checkPlant[2]], (650, 120))
+            self.screen.blit(almanac[self.checkPlant[3]], (610, 310))
             self.checkPlant[2] += 1
             if self.checkPlant[2] >= self.checkPlant[1]:
                 self.checkPlant[2] = 0
@@ -58,7 +53,7 @@ class AlmanahPlant:
         if cell[1] < len(self.board) and cell[0] < len(self.board[cell[1]]):
             self.returnSostoynie()
             self.board[cell[1]][cell[0]][1] = True
-            self.checkPlant = [plants[self.board[cell[1]][cell[0]][0]], len(plants[self.board[cell[1]][cell[0]][0]]), 0, self.board[cell[1]][cell[0]][0]]
+            self.checkPlant = [zombies[self.board[cell[1]][cell[0]][0]], len(zombies[self.board[cell[1]][cell[0]][0]]), 0, self.board[cell[1]][cell[0]][0]]
 
 
     def get_cell(self, mouse_pos):

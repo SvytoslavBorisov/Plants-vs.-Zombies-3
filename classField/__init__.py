@@ -20,6 +20,11 @@ class Field:
             for j in range(self.height):
                 self.board[i].append('')
             self.board.append([])
+        self.hp = [[]]
+        for i in range(self.width):
+            for j in range(self.height):
+                self.hp[i].append(-1)
+            self.hp.append([])
         self.data = []
 
     def render(self):
@@ -84,6 +89,10 @@ class Field:
     def on_click(self, cell, checkPlant):
         if self.board[cell[0]][cell[1]] == '':
             self.board[cell[0]][cell[1]] = choicePlant(checkPlant[0], [cell[0], cell[1]], self.game)
+            if checkPlant[0] == 'wallNut':
+                self.hp[cell[0]][cell[1]] = 500
+            else:
+                self.hp[cell[0]][cell[1]] = 100
             return [True, checkPlant[1]]
         return [False, 0]
 

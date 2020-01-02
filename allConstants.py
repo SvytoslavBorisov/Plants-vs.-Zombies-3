@@ -11,6 +11,7 @@ SIZE1 = WIDTH1, HEIGHT1 = 700, 600
 SIZE2 = WIDTH2, HEIGHT2 = 1026, 600
 SIZE_OF_PLANT = (80, 80)
 SIZE_OF_CARDS = (125, 75)
+SIZE_OF_CARDS_ZOMBIE = (160, 160)
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE2)
@@ -45,6 +46,15 @@ ALMANAH_LEFT = 40
 ALMANAH_TOP = 95
 ALMANAH_STEP_TOP = 5
 ALMANAH_STEP_LEFT = 8
+
+ALMANAH_ZOMBIE_WIDTH = 3
+ALMANAH_ZOMBIE_HEIGHT = 3
+ALMANAH_ZOMBIE_CELL_WIDTH = 160
+ALMANAH_ZOMBIE_CELL_HEIGHT = 160
+ALMANAH_ZOMBIE_LEFT = 40
+ALMANAH_ZOMBIE_TOP = 95
+ALMANAH_ZOMBIE_STEP_TOP = 5
+ALMANAH_ZOMBIE_STEP_LEFT = 8
 
 fontSun = pygame.font.Font('freesansbold.ttf', 30)
 
@@ -86,7 +96,11 @@ cards = {'gatlingPea': load_image('Graphics/cards/gatlingPea.png', SIZE_OF_CARDS
          'wallNut': load_image('Graphics/cards/wallNut.png', SIZE_OF_CARDS),
          'potatoBomb': load_image('Graphics/cards/potatoBomb.png', SIZE_OF_CARDS),
          'squash': load_image('Graphics/cards/squash.png', SIZE_OF_CARDS),
-         'cabbage': load_image('Graphics/cards/cabbage.png', SIZE_OF_CARDS)}
+         'cabbage': load_image('Graphics/cards/cabbage.png', SIZE_OF_CARDS),
+         'normal': load_image('Graphics/cards/zombie.png', SIZE_OF_CARDS_ZOMBIE),
+         'bucket': load_image('Graphics/cards/zombieBucket.png', SIZE_OF_CARDS_ZOMBIE),
+         'normalWithFlag': load_image('Graphics/cards/zombieWithFlag.png', SIZE_OF_CARDS_ZOMBIE),
+         'konus': load_image('Graphics/cards/zombieKonus.png', SIZE_OF_CARDS_ZOMBIE)}
 
 description = {'gatlingPea': load_image('Graphics/description/gatlingPea.png', (88, 16)),
          'sunrise': load_image('Graphics/description/sunrise.png', (88, 16)),
@@ -119,7 +133,7 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
            'normalDamage1': [load_image(f'Graphics/zombies/animationNormalLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'normalWithFlag': [load_image(f'Graphics/zombies/animationNormalWithFlag/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
 
-almanac = {'normal': load_image('Graphics/other/almanah1.png', (118, 110)),
+almanac = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
            'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
            'change': load_image('Graphics/other/almanah.png', (118, 110)),
            'viewPlant': load_image('Graphics/other/viewPlantButton.png', (199, 38)),
@@ -133,7 +147,11 @@ almanac = {'normal': load_image('Graphics/other/almanah1.png', (118, 110)),
            'sunrise': load_image('Graphics/description/sunriseAlmanah.png', (417, 235)),
            'wallNut': load_image('Graphics/description/wallNutAlmanah.png', (417, 235)),
            'potatoBomb': load_image('Graphics/description/potatoBombAlmanah.png', (417, 235)),
-           'squash': load_image('Graphics/description/squashAlmanah.png', (417, 235))}
+           'squash': load_image('Graphics/description/squashAlmanah.png', (417, 235)),
+           'normal': load_image('Graphics/description/zombie.png', (370, 205)),
+           'normalWithFlag': load_image('Graphics/description/zombieWithFlag.png', (370, 205)),
+           'bucket': load_image('Graphics/description/bucket.png', (370, 205)),
+           'konus': load_image('Graphics/description/konus.png', (370, 205))}
 
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
 musicGame = pygame.mixer.Sound('Sounds/Soundtrack Day Stage.wav')
