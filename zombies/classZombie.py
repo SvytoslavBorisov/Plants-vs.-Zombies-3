@@ -17,6 +17,7 @@ class justZombie(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.cur += 1
         self.cur %= len(self.data)
+        print(self.hp)
         if self.x < 140 or self.hp <= 0:
             self.kill()
 

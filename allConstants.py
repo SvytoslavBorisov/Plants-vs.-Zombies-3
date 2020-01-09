@@ -133,7 +133,7 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
            'normalDamage1': [load_image(f'Graphics/zombies/animationNormalLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'normalWithFlag': [load_image(f'Graphics/zombies/animationNormalWithFlag/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
 
-almanac = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
+"""almanac = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
            'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
            'change': load_image('Graphics/other/almanah.png', (118, 110)),
            'viewPlant': load_image('Graphics/other/viewPlantButton.png', (199, 38)),
@@ -151,11 +151,47 @@ almanac = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
            'normal': load_image('Graphics/description/zombie.png', (370, 205)),
            'normalWithFlag': load_image('Graphics/description/zombieWithFlag.png', (370, 205)),
            'bucket': load_image('Graphics/description/bucket.png', (370, 205)),
-           'konus': load_image('Graphics/description/konus.png', (370, 205))}
+           'konus': load_image('Graphics/description/konus.png', (370, 205))}"""
+
+almanac_structure = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
+           'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
+           'change': load_image('Graphics/other/almanah.png', (118, 110)),
+           'viewPlant': load_image('Graphics/other/viewPlantButton.png', (199, 38)),
+           'viewZombies': load_image('Graphics/other/viewZombiesButton.png', (261, 39)),
+           'close': load_image('Graphics/other/closeAlmanahButton.png', (109, 22)),
+           'almanahMainMenu': load_image('Graphics/other/almanahMainMenu.png', SIZE2),
+           'almanahMainMenuZombie': load_image('Graphics/other/almanahMainMenuZombie.png', SIZE2),
+           'closeMainMenu': load_image('Graphics/other/almanahMainMenuClose.png', (170, 51)),
+           'backMainMenu': load_image('Graphics/other/almanahMainMenuBack.png', (171, 51))}
+
+almanac_text = {'gatlingPea': [],
+                'sunrise': [],
+                'wallNut': [],
+                'potatoBomb': [],
+                'squash': [],
+                'normal': [],
+                'normalWithFlag': [],
+                'konus': [],
+                'bucket': []}
+
+fontText = pygame.font.Font('freesansbold.ttf', 15)
+
+for y in almanac_text.keys():
+    with open(f'Graphics/description/{y}.txt', 'r') as f:
+        data = f.readlines()
+        data = ''.join(data)
+        for x in data.split('\n'):
+            almanac_text[y].append(fontText.render(x, 1, (0, 0, 0)))
 
 musicMainMenu = pygame.mixer.Sound('Sounds/Soundtrack Main Menu.wav')
 musicGame = pygame.mixer.Sound('Sounds/Soundtrack Day Stage.wav')
 #music.play(-1)
+
+plants_hp = {'gatlingPea': 100,
+            'sunrise': 100,
+            'wallNut': 500,
+            'potatoBomb': 75,
+            'squash': 75}
 
 zombies_hp = {'normal': 80,
               'konus': 230,

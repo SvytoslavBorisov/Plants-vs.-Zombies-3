@@ -39,7 +39,10 @@ class AlmanahZombie:
                                                                   self.cell_height))
         if self.checkPlant[0] != []:
             self.screen.blit(self.checkPlant[0][self.checkPlant[2]], (650, 120))
-            self.screen.blit(almanac[self.checkPlant[3]], (610, 310))
+            i = 0
+            for x in almanac_text[self.checkPlant[3]]:
+                self.screen.blit(x, (600, 314 + i * 18))
+                i += 1
             self.checkPlant[2] += 1
             if self.checkPlant[2] >= self.checkPlant[1]:
                 self.checkPlant[2] = 0

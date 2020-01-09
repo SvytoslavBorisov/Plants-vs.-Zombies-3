@@ -54,12 +54,12 @@ def pause():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if pygame.Rect.collidepoint(volume.rect, event.pos):
                     screen.blit(gameMenu['pause'], (350, 50))
                     screen.blit(volume.image, (532, 175))
-                    screen.blit(soundPick, (event.pos[0] - 10, 179))
                     pygame.draw.rect(screen, colors['blue'], pygame.Rect(546, 185, event.pos[0] - 546, 10))
+                    screen.blit(soundPick, (event.pos[0] - 10, 179))
                     vol = (event.pos[0] - 540) * 0.68 / 100
                     if 1 > vol > 0.1:
                         game.soundVolume = vol
@@ -79,7 +79,7 @@ def pause():
                 if 448 <= event.pos[0] <= 658 and 334 <= event.pos[1] <= 475:
                     musicGame.stop()
                     return shields['game']()
-            elif event.type == pygame.MOUSEBUTTONUP:
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 if volFlag:
                     volFlag = False
 
@@ -151,7 +151,7 @@ def start_screen():
                     flgAlmanahB = True
                 else:
                     flgAlmanahB = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
                 #print(event.pos)
                 if 583 <= event.pos[0] <= 921 and 109 <= event.pos[1] <= 175:
                     screen.blit(bStartChange.image, (580, 80))
@@ -177,9 +177,9 @@ def start_screen():
 
         screen.blit(mainMenu[indexAnimationMainMenu // 2 - 1], (0, 0))
         if flgAlmanahB:
-            screen.blit(almanac['change'], (600, 380))
+            screen.blit(almanac_structure['change'], (600, 380))
         else:
-            screen.blit(almanac['normal1'], (600, 380))
+            screen.blit(almanac_structure['normal1'], (600, 380))
         if indexAnimationMainMenu >= len(mainMenu) * 2:
             indexAnimationMainMenu = 0
         else:
@@ -201,9 +201,9 @@ def start_screen():
 
 def almanahMainMenuZombie():
 
-    screen.blit(almanac['almanahMainMenuZombie'], (0, 0))
-    screen.blit(almanac['closeMainMenu'], (848, 543))
-    screen.blit(almanac['backMainMenu'], (568, 543))
+    screen.blit(almanac_structure['almanahMainMenuZombie'], (0, 0))
+    screen.blit(almanac_structure['closeMainMenu'], (848, 543))
+    screen.blit(almanac_structure['backMainMenu'], (568, 543))
 
     panel = AlmanahZombie(ALMANAH_ZOMBIE_WIDTH, ALMANAH_ZOMBIE_HEIGHT, ALMANAH_ZOMBIE_CELL_WIDTH, ALMANAH_ZOMBIE_CELL_HEIGHT,
                           ALMANAH_ZOMBIE_LEFT, ALMANAH_ZOMBIE_TOP, ALMANAH_ZOMBIE_STEP_TOP, ALMANAH_ZOMBIE_STEP_LEFT, screen)
@@ -212,16 +212,16 @@ def almanahMainMenuZombie():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 panel.get_click(event.pos)
                 if 848 <= event.pos[0] <= 1019 and 543 <= event.pos[1] <= 594:
                     return shields['start_screen']()
                 elif 568 <= event.pos[0] <= 738 and 543 <= event.pos[1] <= 594:
                     return shields['almanahChange']()
 
-        screen.blit(almanac['almanahMainMenuZombie'], (0, 0))
-        screen.blit(almanac['closeMainMenu'], (848, 543))
-        screen.blit(almanac['backMainMenu'], (568, 543))
+        screen.blit(almanac_structure['almanahMainMenuZombie'], (0, 0))
+        screen.blit(almanac_structure['closeMainMenu'], (848, 543))
+        screen.blit(almanac_structure['backMainMenu'], (568, 543))
 
         panel.render()
         pygame.display.flip()
@@ -230,9 +230,9 @@ def almanahMainMenuZombie():
 
 def almanahMainMenuPlant():
 
-    screen.blit(almanac['almanahMainMenu'], (0, 0))
-    screen.blit(almanac['closeMainMenu'], (848, 543))
-    screen.blit(almanac['backMainMenu'], (568, 543))
+    screen.blit(almanac_structure['almanahMainMenu'], (0, 0))
+    screen.blit(almanac_structure['closeMainMenu'], (848, 543))
+    screen.blit(almanac_structure['backMainMenu'], (568, 543))
 
     panel = AlmanahPlant(ALMANAH_WIDTH, ALMANAH_HEIGHT, ALMANAH_CELL_WIDTH, ALMANAH_CELL_HEIGHT, ALMANAH_LEFT, ALMANAH_TOP, ALMANAH_STEP_TOP, ALMANAH_STEP_LEFT, screen)
 
@@ -240,16 +240,16 @@ def almanahMainMenuPlant():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 panel.get_click(event.pos)
                 if 848 <= event.pos[0] <= 1019 and 543 <= event.pos[1] <= 594:
                     return shields['start_screen']()
                 elif 568 <= event.pos[0] <= 738 and 543 <= event.pos[1] <= 594:
                     return shields['almanahChange']()
 
-        screen.blit(almanac['almanahMainMenu'], (0, 0))
-        screen.blit(almanac['closeMainMenu'], (848, 543))
-        screen.blit(almanac['backMainMenu'], (568, 543))
+        screen.blit(almanac_structure['almanahMainMenu'], (0, 0))
+        screen.blit(almanac_structure['closeMainMenu'], (848, 543))
+        screen.blit(almanac_structure['backMainMenu'], (568, 543))
 
         panel.render()
         pygame.display.flip()
@@ -258,16 +258,16 @@ def almanahMainMenuPlant():
 
 def almanahChange():
 
-    screen.blit(almanac['almanahMenu'], (0, 0))
-    screen.blit(almanac['viewPlant'], (166, 346))
-    screen.blit(almanac['viewZombies'], (625, 346))
-    screen.blit(almanac['close'], (868, 568))
+    screen.blit(almanac_structure['almanahMenu'], (0, 0))
+    screen.blit(almanac_structure['viewPlant'], (166, 346))
+    screen.blit(almanac_structure['viewZombies'], (625, 346))
+    screen.blit(almanac_structure['close'], (868, 568))
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if 868 <= event.pos[0] <= 977 and 568 <= event.pos[1] <= 590:
                     return shields['start_screen']()
                 elif 166 <= event.pos[0] <= 365 and 346 <= event.pos[1] <= 384:
@@ -297,7 +297,7 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 #print(event.pos)
                 if pygame.Rect.collidepoint(bMenu.rect, event.pos):
                     shields['pause']()
@@ -384,4 +384,4 @@ musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 
 while True:
-    temp = shields['start_screen']()
+    temp = shields['game']()

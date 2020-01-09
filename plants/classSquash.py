@@ -23,6 +23,7 @@ class Squash(pygame.sprite.Sprite):
         self.row = row
         self.col = col
 
+
         for i in range(len(spritesNormal)):
             self.images_listNormal.append(spritesNormal[i])
             self.rectsNormal.append(self.images_listNormal[i].get_rect())
@@ -33,3 +34,9 @@ class Squash(pygame.sprite.Sprite):
 
         self.cur_frame = (self.cur_frame + 1) % self.glb_len
         self.image = self.images_listNormal[self.cur_frame]
+        x = FIELD_CELL_WIDTH * self.row + FIELD_LEFT
+        for z in zs:
+            if x >= z.x >= x - 100 and self.col == z.row:
+                del self
+                z.hp -= 1000
+                return 'DEL'

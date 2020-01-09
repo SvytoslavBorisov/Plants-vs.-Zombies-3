@@ -44,7 +44,10 @@ class AlmanahPlant:
                                                                   self.cell_height))
         if self.checkPlant[0] != []:
             self.screen.blit(self.checkPlant[0][self.checkPlant[2]], (750, 150))
-            self.screen.blit(almanac[self.checkPlant[3]], (588, 302))
+            i = 0
+            for x in almanac_text[self.checkPlant[3]]:
+                self.screen.blit(x, (600, 314 + i * 18))
+                i += 1
             self.checkPlant[2] += 1
             if self.checkPlant[2] >= self.checkPlant[1]:
                 self.checkPlant[2] = 0
@@ -58,7 +61,8 @@ class AlmanahPlant:
         if cell[1] < len(self.board) and cell[0] < len(self.board[cell[1]]):
             self.returnSostoynie()
             self.board[cell[1]][cell[0]][1] = True
-            self.checkPlant = [plants[self.board[cell[1]][cell[0]][0]], len(plants[self.board[cell[1]][cell[0]][0]]), 0, self.board[cell[1]][cell[0]][0]]
+            self.checkPlant = [plants[self.board[cell[1]][cell[0]][0]], len(plants[self.board[cell[1]][cell[0]][0]]),
+                               0, self.board[cell[1]][cell[0]][0]]
 
 
     def get_cell(self, mouse_pos):

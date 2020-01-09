@@ -15,10 +15,10 @@ class Panel:
         self.game = game
         self.board = [[]]
         self.board[0].append(['gatlingPea', 100, False, 1, 140])
-        self.board[0].append(['sunrise', 50, False, 140, 140])
-        self.board[0].append(['wallNut', 50, False, 1, 140])
-        self.board[0].append(['potatoBomb', 25, False, 1, 140])
-        self.board[0].append(['squash', 75, False, 1, 140])
+        self.board[0].append(['sunrise', 50, False, 140, 110])
+        self.board[0].append(['wallNut', 50, False, 1, 170])
+        self.board[0].append(['potatoBomb', 25, False, 1, 210])
+        self.board[0].append(['squash', 75, False, 1, 210])
         #self.board[0].append(['cabbage', 175, False, 1])
         self.data = []
 

@@ -42,16 +42,18 @@ class Field:
                                              (self.cell_width, self.cell_height)), 1)
                 """
                 if self.board[j][i] != '':
-                    self.board[j][i].update()
-                    self.screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
-                                               self.cell_height * i + self.top,
-                                               self.cell_width,
-                                               self.cell_height))
-                    if self.board[j][i].objects:
-                        for h in range(len(self.board[j][i].objects)):
-                            coord = self.board[j][i].objects[h].update()
-                            if coord:
-                                self.objects.append([self.board[j][i].objects[h], [self.board[j][i].objects[h].image, coord], j, i, h])
+                    if self.board[j][i].update() != 'DEL':
+                        self.screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
+                                                   self.cell_height * i + self.top,
+                                                   self.cell_width,
+                                                   self.cell_height))
+                        if self.board[j][i].objects:
+                            for h in range(len(self.board[j][i].objects)):
+                                coord = self.board[j][i].objects[h].update()
+                                if coord:
+                                    self.objects.append([self.board[j][i].objects[h], [self.board[j][i].objects[h].image, coord], j, i, h])
+                    else:
+                        self.board[j][i] = ''
         for x in self.objects:
             screen.blit(*x[1])
 
@@ -89,10 +91,7 @@ class Field:
     def on_click(self, cell, checkPlant):
         if self.board[cell[0]][cell[1]] == '':
             self.board[cell[0]][cell[1]] = choicePlant(checkPlant[0], [cell[0], cell[1]], self.game)
-            if checkPlant[0] == 'wallNut':
-                self.hp[cell[0]][cell[1]] = 500
-            else:
-                self.hp[cell[0]][cell[1]] = 100
+            self.hp[cell[0]][cell[1]] = plants_hp[checkPlant[0]]
             return [True, checkPlant[1]]
         return [False, 0]
 
