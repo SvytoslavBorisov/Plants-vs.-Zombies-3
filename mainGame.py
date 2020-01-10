@@ -151,7 +151,7 @@ def start_screen():
                     flgAlmanahB = True
                 else:
                     flgAlmanahB = False
-            elif event.type == pygame.MOUSEBUTTONDOWN  and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 #print(event.pos)
                 if 583 <= event.pos[0] <= 921 and 109 <= event.pos[1] <= 175:
                     screen.blit(bStartChange.image, (580, 80))
@@ -292,7 +292,7 @@ def game():
     flgPlant = False
     while True:
         game.time += 1
-        if (game.time + 1) % 120 == 0:
+        if (game.time + 1) % 140 == 0:
             objects.append(classSunrise.Sun(0, 0, plants['sun'], random.randint(200, 900), -100))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -319,15 +319,15 @@ def game():
                 zs.add(classZombie.konusZombie(random.randint(0, 4), zombies_hp['konus']))
             elif x == 1:
                 zs.add(classZombie.normalZombie(random.randint(0, 4), zombies_hp['normal']))
-            elif x == 2:
-                zs.add(classZombie.normalZombieWithFlag(random.randint(0, 4), zombies_hp['normal']))
-            else:
-                zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))
+            '''elif x == 2:
+                zs.add(classZombie.normalZombieWithFlag(random.randint(0, 4), zombies_hp['normal']))'''
+            '''else:
+                zs.add(classZombie.bucketZombie(random.randint(0, 4), zombies_hp['bucket']))'''
 
         for z in zs:
             k = int((z.x - FIELD_LEFT - 60) // FIELD_CELL_WIDTH + 2)
             if 0 <= k < FIELD_WIDTH and field.board[k][z.row] != '':
-                z.x += 1
+                z.x += z.speed
                 field.hp[k][z.row] -= 1
                 if field.hp[k][z.row] < 0:
                     field.hp[k][z.row] = -1
@@ -346,10 +346,12 @@ def game():
         panel.mouse_move(event)
 
         textSun = fontSun.render(str(game.suns), True, colors['black'])
-        screen.blit(textSun, (250, 15))
+        screen.blit(textSun, (240, 15))
 
-        zs.update()
-        zs.draw(screen)
+        for x in sorted(zs.sprites(), key=lambda x: x.row):
+            if x.update() == 'ZombieWin':
+                return shields['pause']
+            screen.blit(x.image, (x.rect.x, x.rect.y))
         i = 0
         while i < len(objects):
             objects[i].update()
@@ -380,7 +382,6 @@ shields = {'load_screen': load_screen,
            'almanahMainMenuZombie': almanahMainMenuZombie}
 
 game = Game(500)
-musicMainMenu.play(-1)
 musicMainMenu.set_volume(game.soundVolume)
 
 while True:
