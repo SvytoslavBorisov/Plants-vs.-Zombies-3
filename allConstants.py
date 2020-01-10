@@ -65,6 +65,8 @@ gamesSprites = {'yardDay':    pygame.image.load('Graphics/other/Frontyard.jpg').
 
 mainMenu = [load_image(f'Graphics/other/animationStartMenu/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(11)]
 
+zombieWon = load_image('Graphics/other/ZombiesWon.jpg', (564, 468))
+
 plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (70, 80)) for i in range(44)],
           'gatlingPea': [load_image(f'Graphics/plants/animationGatlingPea/{i}.png', SIZE_OF_PLANT) for i in range(23)],
           'gatlingPeaShoot': [load_image(f'Graphics/plants/animationGatlingPeaShoot/{i}.png', SIZE_OF_PLANT) for i in range(14)],
@@ -133,26 +135,6 @@ zombies = {'konus': [load_image(f'Graphics/zombies/animationKonus/{str(i + 1).rj
            'normalDamage1': [load_image(f'Graphics/zombies/animationNormalLittleDamage/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)],
            'normalWithFlag': [load_image(f'Graphics/zombies/animationNormalWithFlag/{str(i + 1).rjust(4, "0")}.png', (165, 145)) for i in range(21)]}
 
-"""almanac = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
-           'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
-           'change': load_image('Graphics/other/almanah.png', (118, 110)),
-           'viewPlant': load_image('Graphics/other/viewPlantButton.png', (199, 38)),
-           'viewZombies': load_image('Graphics/other/viewZombiesButton.png', (261, 39)),
-           'close': load_image('Graphics/other/closeAlmanahButton.png', (109, 22)),
-           'almanahMainMenu': load_image('Graphics/other/almanahMainMenu.png', SIZE2),
-           'almanahMainMenuZombie': load_image('Graphics/other/almanahMainMenuZombie.png', SIZE2),
-           'closeMainMenu': load_image('Graphics/other/almanahMainMenuClose.png', (170, 51)),
-           'backMainMenu': load_image('Graphics/other/almanahMainMenuBack.png', (171, 51)),
-           'gatlingPea': load_image('Graphics/description/gatlingPeaAlmanah.png', (417, 235)),
-           'sunrise': load_image('Graphics/description/sunriseAlmanah.png', (417, 235)),
-           'wallNut': load_image('Graphics/description/wallNutAlmanah.png', (417, 235)),
-           'potatoBomb': load_image('Graphics/description/potatoBombAlmanah.png', (417, 235)),
-           'squash': load_image('Graphics/description/squashAlmanah.png', (417, 235)),
-           'normal': load_image('Graphics/description/zombie.png', (370, 205)),
-           'normalWithFlag': load_image('Graphics/description/zombieWithFlag.png', (370, 205)),
-           'bucket': load_image('Graphics/description/bucket.png', (370, 205)),
-           'konus': load_image('Graphics/description/konus.png', (370, 205))}"""
-
 almanac_structure = {'normal1': load_image('Graphics/other/almanah1.png', (118, 110)),
            'almanahMenu': load_image('Graphics/other/almanahMenu.png', SIZE2),
            'change': load_image('Graphics/other/almanah.png', (118, 110)),
@@ -194,5 +176,8 @@ plants_hp = {'gatlingPea': 100,
             'squash': 75}
 
 zombies_hp = {'normal': 80,
+              'normalWithFlag': 80,
               'konus': 230,
               'bucket': 350}
+
+lownmowers = [0, 0, 0, 0, 0]
