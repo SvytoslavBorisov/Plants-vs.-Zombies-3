@@ -2,6 +2,22 @@ import pygame
 from classPlant import *
 from allConstants import *
 from classPanel import *
+from plants import *
+
+
+class Mower(pygame.sprite.Sprite):
+    def __init__(self, row):
+        super().__init__()
+        self.row = row
+        self.image = plants['lownMower']
+        self.rect = self.image.get_rect()
+        self.active = True
+
+    def update(self, *args):
+        self.rect.x += 10
+        lownmowers[self.row] = self.rect.x + FIELD_LEFT
+        if self.rect.x + FIELD_LEFT > WIDTH2:
+            self.active = False
 
 
 class Field:
@@ -16,6 +32,7 @@ class Field:
         self.game = game
         self.board = [[]]
         self.objects = []
+        self.mowers = [Mower(0), Mower(1), Mower(2), Mower(3), Mower(4)]
         for i in range(self.width):
             for j in range(self.height):
                 self.board[i].append('')
@@ -30,10 +47,21 @@ class Field:
     def render(self):
         self.objects = []
         for i in range(self.height):
-            self.screen.blit(plants['lownMower'], (self.left - 75,
-                                               self.cell_height * i + self.top,
-                                               self.cell_width,
-                                               self.cell_height))
+            if lownmowers[i] == 0:
+                self.screen.blit(self.mowers[i].image, (self.left - 75,
+                                                   self.cell_height * i + self.top + 15,
+                                                   self.cell_width,
+                                                   self.cell_height))
+            else:
+                self.mowers[i].update()
+                for z in zs:
+                    if self.mowers[i].row == z.row and z.x <= self.mowers[i].rect.x + 75 and self.mowers[i].active:
+                        z.hp = 0
+                if self.mowers[i].active:
+                    self.screen.blit(self.mowers[i].image, (self.left - 75 + self.mowers[i].rect.x,
+                                                        self.cell_height * i + self.top + 15,
+                                                        self.cell_width,
+                                                        self.cell_height))
             for j in range(self.width):
                 """
                 pygame.draw.rect(screen, pygame.Color("white"),
