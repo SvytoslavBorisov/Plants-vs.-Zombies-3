@@ -49,10 +49,10 @@ class Panel:
                                                                           self.cell_width,
                                                                           self.cell_height))
                             self.board[j][i][3] += 1
-                            if self.board[j][i][4] <= self.board[j][i][3] + 10:
+                            if self.board[j][i][4] <= self.board[j][i][3] + 15:
                                 self.board[j][i][3] = self.board[j][i][4]
                             else:
-                                scr = pygame.Surface((self.cell_width - 7, 75 / self.board[j][i][4] * self.board[j][i][3]))
+                                scr = pygame.Surface((self.cell_width - 6, 75 / self.board[j][i][4] * self.board[j][i][3]))
                                 scr.set_alpha(159)
                                 scr.fill(pygame.Color(64, 64, 64))
                                 self.screen.blit(scr, (self.left + j * self.cell_width + 5,
