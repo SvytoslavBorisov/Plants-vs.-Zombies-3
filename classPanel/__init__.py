@@ -24,9 +24,7 @@ class Panel:
     def render(self):
         for i in range(self.height):
             for j in range(self.width):
-
                 if self.board[j][i][0] != '':
-
                     if self.board[j][i][2]:
                         self.screen.blit(cards[self.board[j][i][0]], (self.cell_width * j + self.left,
                                                self.cell_height * i + self.top + self.step * i,
@@ -72,12 +70,12 @@ class Panel:
         cell = self.get_cell(mouse_pos)
         if cell:
             if self.game.suns < self.board[cell[0]][cell[1]][1]:
-                screen.blit(descriptionNoSun[self.board[cell[0]][cell[1]][0]], (PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
+                self.screen.blit(descriptionNoSun[self.board[cell[0]][cell[1]][0]], (PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
             elif self.board[cell[0]][cell[1]][4] != self.board[cell[0]][cell[1]][3]:
-                screen.blit(descriptionNoTime[self.board[cell[0]][cell[1]][0]], (
+                self.screen.blit(descriptionNoTime[self.board[cell[0]][cell[1]][0]], (
                 PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
             else:
-                screen.blit(description[self.board[cell[0]][cell[1]][0]], (
+                self.screen.blit(description[self.board[cell[0]][cell[1]][0]], (
                 PANEL_LEFT + PANEL_CELL_WIDTH, PANEL_TOP + PANEL_CELL_HEIGHT * cell[1] + cell[1] * PANEL_STEP))
 
     def get_click(self, mouse_pos):

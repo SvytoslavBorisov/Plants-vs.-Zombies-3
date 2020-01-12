@@ -14,20 +14,18 @@ class justZombie(pygame.sprite.Sprite):
         self.row = row
 
     def update(self):
-        self.x -= self.speed
         self.image = self.data[self.cur]
         self.rect.x = self.x
         self.cur += 1
         self.cur %= len(self.data)
-        if self.x < 140:
-            if lownmowers[self.row] == 0:
-                lownmowers[self.row] = FIELD_LEFT
-            else:
-                screen.blit(zombieWon, (300, 100))
-                return 'ZombieWin'
-            self.kill()
+        self.x -= self.speed
         if self.hp <= 0:
             self.kill()
+        elif 100 < self.x < 140:
+            if lownmowers[self.row] == 0:
+                lownmowers[self.row] = FIELD_LEFT
+        elif self.x <= 100:
+            return 'ZombieWin'
 
 
 class konusZombie(justZombie):
@@ -44,7 +42,7 @@ class konusZombie(justZombie):
         self.rect.y = self.y
 
     def update(self):
-        super().update()
+        sms = super().update()
         only = zombies_hp['konus'] - zombies_hp['normal']
         if only // 3 * 2 >= self.hp - zombies_hp['normal']:
             self.data = self.dataDamage1
@@ -54,6 +52,7 @@ class konusZombie(justZombie):
             self.data = self.dataDamage3
         if self.hp <= zombies_hp['normal'] // 2:
             self.data = self.dataDamage4
+        return sms
 
 class normalZombie(justZombie):
     def __init__(self, row, hp):
@@ -66,11 +65,12 @@ class normalZombie(justZombie):
         self.rect.y = self.y
 
     def update(self):
-        super().update()
+        sms = super().update()
         if zombies_hp['normal'] // 2 < self.hp <= zombies_hp['normal']:
             self.data = self.data
         if self.hp <= zombies_hp['normal'] // 2:
             self.data = self.dataDamage2
+        return sms
 
 
 class normalZombieWithFlag(justZombie):
@@ -84,11 +84,12 @@ class normalZombieWithFlag(justZombie):
         self.rect.y = self.y
 
     def update(self):
-        super().update()
+        sms = super().update()
         if zombies_hp['normalWithFlag'] // 2 < self.hp <= zombies_hp['normalWithFlag']:
             self.data = self.data
         if self.hp <= zombies_hp['normalWithFlag'] // 2:
             self.data = self.dataDamage2
+        return sms
 
 
 class bucketZombie(justZombie):
@@ -105,7 +106,7 @@ class bucketZombie(justZombie):
         self.rect.y = self.y
 
     def update(self):
-        super().update()
+        sms = super().update()
         only = zombies_hp['bucket'] - zombies_hp['normal']
         if only // 3 * 2 >= self.hp - zombies_hp['normal']:
             self.data = self.dataDamage1
@@ -115,3 +116,4 @@ class bucketZombie(justZombie):
             self.data = self.dataDamage3
         if self.hp <= zombies_hp['normal'] // 2:
             self.data = self.dataDamage4
+        return sms

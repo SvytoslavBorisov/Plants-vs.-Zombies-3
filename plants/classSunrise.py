@@ -3,45 +3,29 @@ import allConstants
 import math
 import random
 
+
 class Sunrise(pygame.sprite.Sprite):
 
     def __init__(self, row, col, game):
         super().__init__()
-
         spritesNormal = allConstants.plants['sunrise']
         spritesGive = allConstants.plants['sunriseGiveSun']
-
-        self.images_listNormal = []
-        self.rectsNormal = []
-
-        self.images_listGive = []
-        self.spritesGive = []
-
-        self.cur_frame = 0
-        self.glb_cur_frame = 0
-
+        self.images_listNormal, self.rectsNormal = [], []
+        self.images_listGive, self.spritesGive, self.objects = [], [], []
+        self.cur_frame, self.glb_cur_frame = 0, 0
         self.game = game
-
-        self.objects = []
-        self.row = row
-        self.col = col
+        self.row, self.col = row, col
         self.cost = 50
-
         for j in range(16):
             for i in range(len(spritesNormal)):
                 self.images_listNormal.append(spritesNormal[i])
                 if i & 1:
                     self.images_listNormal.append(spritesNormal[i])
-                self.rectsNormal.append(self.images_listNormal[i].get_rect())
-
         for i in range(len(spritesGive)):
             self.images_listGive.append(spritesGive[i])
-            self.spritesGive.append(self.images_listGive[i].get_rect())
-
         self.glb_len = len(self.images_listNormal)
 
     def update(self):
-
         if self.glb_cur_frame == 0:
             self.cur_frame = (self.cur_frame + 1) % self.glb_len
             if self.cur_frame == 0:

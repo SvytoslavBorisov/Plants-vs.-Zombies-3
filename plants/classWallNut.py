@@ -12,18 +12,16 @@ class WallNut(pygame.sprite.Sprite):
         spritesNormal = plants['wallNut']
 
         self.images_list = []
-        self.rectsNormal = []
+        self.objects = []
 
         self.cur_frame = 0
         self.glb_cur_frame = 0
 
-        self.objects = []
         self.row = row
         self.col = col
 
         for i in range(len(spritesNormal)):
             self.images_list.append(spritesNormal[i])
-            self.rectsNormal.append(self.images_list[i].get_rect())
 
         self.glb_len = len(self.images_list)
 

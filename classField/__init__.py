@@ -14,8 +14,8 @@ class Mower(pygame.sprite.Sprite):
         self.active = True
 
     def update(self, *args):
-        self.rect.x += 10
         lownmowers[self.row] = self.rect.x + FIELD_LEFT
+        self.rect.x += 10
         if self.rect.x > WIDTH2:
             self.active = False
 
@@ -55,7 +55,7 @@ class Field:
             else:
                 self.mowers[i].update()
                 for z in zs:
-                    if self.mowers[i].row == z.row and z.x <= self.mowers[i].rect.x + 75 and self.mowers[i].active:
+                    if self.mowers[i].row == z.row and z.x <= self.mowers[i].rect.x + 100 and self.mowers[i].active:
                         z.hp = 0
                 if self.mowers[i].active:
                     self.screen.blit(self.mowers[i].image, (self.left - 75 + self.mowers[i].rect.x,
@@ -84,7 +84,7 @@ class Field:
                     else:
                         self.board[j][i] = ''
         for x in self.objects:
-            screen.blit(*x[1])
+            self.screen.blit(*x[1])
 
     def mouse_move(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -92,12 +92,12 @@ class Field:
             scr = pygame.Surface((FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT * FIELD_HEIGHT))
             scr.set_alpha(128)
             scr.fill(pygame.Color(255, 255, 0))
-            screen.blit(scr, (FIELD_LEFT + FIELD_CELL_WIDTH * cell[0], FIELD_TOP))
+            self.screen.blit(scr, (FIELD_LEFT + FIELD_CELL_WIDTH * cell[0], FIELD_TOP))
 
             scr = pygame.Surface((FIELD_CELL_WIDTH * FIELD_WIDTH, FIELD_CELL_HEIGHT))
             scr.set_alpha(128)
             scr.fill(pygame.Color(255, 255, 0))
-            screen.blit(scr, (FIELD_LEFT, FIELD_TOP + FIELD_CELL_HEIGHT * cell[1]))
+            self.screen.blit(scr, (FIELD_LEFT, FIELD_TOP + FIELD_CELL_HEIGHT * cell[1]))
 
     def get_click(self, mouse_pos, checkPlant, objec, flgShovel):
         cell = self.get_cell(mouse_pos)

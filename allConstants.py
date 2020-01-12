@@ -14,7 +14,7 @@ SIZE_OF_CARDS = (125, 75)
 SIZE_OF_CARDS_ZOMBIE = (160, 160)
 
 pygame.init()
-screen = pygame.display.set_mode(SIZE2)
+screen4 = pygame.display.set_mode(SIZE2)
 FPS = 20
 zs = pygame.sprite.Group()
 
@@ -67,7 +67,9 @@ gamesSprites = {'yardDay':    pygame.image.load('Graphics/other/Frontyard.jpg').
 
 mainMenu = [load_image(f'Graphics/other/animationStartMenu/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(11)]
 
-zombieWon = load_image('Graphics/other/ZombiesWon.jpg', (564, 468))
+zombieWon = load_image('Graphics/other/ZombiesWon.png', (564, 468))
+
+recordMenu = load_image('Graphics/other/recordMenu.png', SIZE2)
 
 plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (70, 80)) for i in range(44)],
           'gatlingPea': [load_image(f'Graphics/plants/animationGatlingPea/{i}.png', SIZE_OF_PLANT) for i in range(23)],
@@ -87,7 +89,7 @@ menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Butto
         'startChange': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141)),
         'exit': load_image(f'Graphics/other/buttonExit.png', (70, 30)),
         'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (70, 30)),
-        }
+        'record': load_image(f'Graphics/other/bRecord.png', (290, 60))}
 
 gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
 
