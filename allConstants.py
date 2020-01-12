@@ -14,7 +14,7 @@ SIZE_OF_CARDS = (125, 75)
 SIZE_OF_CARDS_ZOMBIE = (160, 160)
 
 pygame.init()
-screen = pygame.display.set_mode(SIZE2)
+screen4 = pygame.display.set_mode(SIZE2)
 FPS = 20
 zs = pygame.sprite.Group()
 
@@ -63,11 +63,14 @@ gamesSprites = {'yardDay':    pygame.image.load('Graphics/other/Frontyard.jpg').
                 'panelSun':   load_image(f'Graphics/other/panelSun.png', (160, 60)),
                 'punkteer':   load_image('Graphics/cards/punkteer.png', SIZE_OF_CARDS),
                 'shovel':     load_image(f'Graphics/other/shovel.png', (59, 62)),
-                'shovelB':    load_image(f'Graphics/other/bShovel.png', (54, 54))}
+                'shovelB':    load_image(f'Graphics/other/bShovel.png', (54, 54)),
+                'panelScore': load_image(f'Graphics/other/panelScore.png', (120, 54))}
 
 mainMenu = [load_image(f'Graphics/other/animationStartMenu/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(11)]
 
-zombieWon = load_image('Graphics/other/ZombiesWon.jpg', (564, 468))
+zombieWon = load_image('Graphics/other/ZombiesWon.png', (564, 468))
+
+recordMenu = load_image('Graphics/other/recordMenu.png', SIZE2)
 
 plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (70, 80)) for i in range(44)],
           'gatlingPea': [load_image(f'Graphics/plants/animationGatlingPea/{i}.png', SIZE_OF_PLANT) for i in range(23)],
@@ -85,11 +88,17 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
 
 menu = {'start': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Button1.png', (350, 141)),
         'startChange': load_image(f'Graphics/other/SelectorScreen_StartAdventure_Highlight.png', (350, 141)),
-        'exit': load_image(f'Graphics/other/buttonExit.png', (70, 30)),
-        'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (70, 30)),
-        }
+        'exit': load_image(f'Graphics/other/buttonExit.png', (66, 38)),
+        'exitChange': load_image(f'Graphics/other/buttonExitChange.png', (66, 38)),
+        'record': load_image(f'Graphics/other/bRecord.png', (290, 60)),
+        'help': load_image(f'Graphics/other/bHelp.png', (49, 31)),
+        'helpChange': load_image(f'Graphics/other/bHelpChange.png', (49, 31)),
+        'helpScreen': load_image(f'Graphics/other/help_screen.png', SIZE2),
+        'options': load_image(f'Graphics/other/bOption.png', (71, 31)),
+        'optionsChange': load_image(f'Graphics/other/bOptionChange.png', (71, 31))}
 
-gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490))}
+gameMenu = {'pause': load_image(f'Graphics/other/pauseMenu.png', (410, 490)),
+            'pauseMusic': load_image(f'Graphics/other/pauseMusic.png', (410, 490))}
 
 load_screen_sprites = [load_image(f'Graphics/other/animationLoadScreen/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(14)]
 
@@ -185,3 +194,4 @@ zombies_hp = {'normal': 80,
               'bucket': 350}
 
 lownmowers = [0, 0, 0, 0, 0]
+
