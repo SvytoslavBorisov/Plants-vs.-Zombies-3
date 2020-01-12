@@ -31,7 +31,7 @@ FIELD_CELL_HEIGHT = 99
 FIELD_LEFT = 245
 FIELD_TOP = 80
 
-PANEL_WIDTH = 5
+PANEL_WIDTH = 4
 PANEL_CELL_WIDTH = 125
 PANEL_CELL_HEIGHT = 75
 PANEL_LEFT = 30
@@ -61,7 +61,9 @@ fontSun = pygame.font.Font('freesansbold.ttf', 30)
 gamesSprites = {'yardDay':    pygame.image.load('Graphics/other/Frontyard.jpg').convert(),
                 'buttonMenu': load_image(f'Graphics/other/menu.png', (160, 50)),
                 'panelSun':   load_image(f'Graphics/other/panelSun.png', (160, 60)),
-                'punkteer':   load_image('Graphics/cards/punkteer.png', SIZE_OF_CARDS)}
+                'punkteer':   load_image('Graphics/cards/punkteer.png', SIZE_OF_CARDS),
+                'shovel':     load_image(f'Graphics/other/shovel.png', (59, 62)),
+                'shovelB':    load_image(f'Graphics/other/bShovel.png', (54, 54))}
 
 mainMenu = [load_image(f'Graphics/other/animationStartMenu/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', (WIDTH2, HEIGHT2)) for i in range(11)]
 
@@ -77,6 +79,7 @@ plants = {'wallNut': [load_image(f'Graphics/plants/animationWallNut/{"0" *(4 - l
           'sun': load_image(f'Graphics/plants/animationSunriseGiveSun/sun.png', (70, 70)),
           'potatoBomb': [load_image(f'Graphics/plants/animationPotatoBomb/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(4)],
           'squash': [load_image(f'Graphics/plants/animationSquash/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(17)],
+          'squashJump': [load_image(f'Graphics/plants/animationSquashJump/{"0" *(4 - len(str(i + 1))) + str(i + 1)}.png', SIZE_OF_PLANT) for i in range(20)],
           'cabbage': [load_image(f'Graphics/plants/animationCabbage/{"0" *(4 - len(str(i))) + str(i) if i != 0 else "0000"}.png', (200, 120)) for i in range(23)],
           'lownMower': load_image(f'Graphics/other/lownMower.png', (75, 75))}
 

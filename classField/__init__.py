@@ -16,7 +16,7 @@ class Mower(pygame.sprite.Sprite):
     def update(self, *args):
         self.rect.x += 10
         lownmowers[self.row] = self.rect.x + FIELD_LEFT
-        if self.rect.x + FIELD_LEFT > WIDTH2:
+        if self.rect.x > WIDTH2:
             self.active = False
 
 
@@ -63,18 +63,19 @@ class Field:
                                                         self.cell_width,
                                                         self.cell_height))
             for j in range(self.width):
-                """
-                pygame.draw.rect(screen, pygame.Color("white"),
-                                 pygame.Rect((self.left + j * self.cell_width,
-                                              self.top + i * self.cell_height),
-                                             (self.cell_width, self.cell_height)), 1)
-                """
                 if self.board[j][i] != '':
-                    if self.board[j][i].update() != 'DEL':
-                        self.screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
-                                                   self.cell_height * i + self.top,
+                    coord = self.board[j][i].update()
+                    if coord != 'DEL':
+                        if coord:
+                            self.screen.blit(self.board[j][i].image, (self.cell_width * j + self.left + coord[0],
+                                                   self.cell_height * i + self.top + coord[1],
                                                    self.cell_width,
                                                    self.cell_height))
+                        else:
+                            self.screen.blit(self.board[j][i].image, (self.cell_width * j + self.left,
+                                                                      self.cell_height * i + self.top,
+                                                                      self.cell_width,
+                                                                      self.cell_height))
                         if self.board[j][i].objects:
                             for h in range(len(self.board[j][i].objects)):
                                 coord = self.board[j][i].objects[h].update()
@@ -98,9 +99,12 @@ class Field:
             scr.fill(pygame.Color(255, 255, 0))
             screen.blit(scr, (FIELD_LEFT, FIELD_TOP + FIELD_CELL_HEIGHT * cell[1]))
 
-    def get_click(self, mouse_pos, checkPlant, objec):
+    def get_click(self, mouse_pos, checkPlant, objec, flgShovel):
         cell = self.get_cell(mouse_pos)
         i = 0
+        if flgShovel and cell and self.board[cell[0]][cell[1]] != '':
+            self.board[cell[0]][cell[1]] = ''
+            flgShovel = False
         while i < len(self.objects) + len(objec):
             if i < len(self.objects) and self.objects[i][0].type == 'sun' and self.objects[i][0].rect.collidepoint(mouse_pos):
                 self.board[self.objects[i][2]][self.objects[i][3]].objects[self.objects[i][4]].active = False
@@ -113,8 +117,8 @@ class Field:
         if cell and checkPlant:
             temp = self.on_click(cell, checkPlant)
             if temp[0]:
-                return [True, self.game.suns - temp[1], objec]
-        return [False, self.game.suns, objec]
+                return [True, self.game.suns - temp[1], objec, flgShovel]
+        return [False, self.game.suns, objec, flgShovel]
 
     def on_click(self, cell, checkPlant):
         if self.board[cell[0]][cell[1]] == '':

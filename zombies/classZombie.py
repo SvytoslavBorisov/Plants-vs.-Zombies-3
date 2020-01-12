@@ -38,7 +38,6 @@ class konusZombie(justZombie):
         self.dataDamage2 = zombies['konusDamage2']
         self.dataDamage3 = zombies['normal']
         self.dataDamage4 = zombies['normalDamage1']
-        # self.data += self.dataDamage1 + self.dataDamage2 + self.dataDamage3  # TEST
         self.image = self.data[self.cur]
         self.rect = self.image.get_rect()
         self.rect.x = self.x

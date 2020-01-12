@@ -1,4 +1,13 @@
 import pygame
+
+
+pygame.init()
+pygame.display.set_caption('Lawn Of Undead')
+pygame.display.set_icon(pygame.image.load('Graphics/other/icon.png'))
+SIZE2 = WIDTH2, HEIGHT2 = 1026, 600
+screen = pygame.display.set_mode(SIZE2)
+
+
 from classPlant import *
 from classPanel import Panel
 from classField import Field
@@ -289,11 +298,13 @@ def game():
 
     game.suns = 50
     zs.empty()
+    lownmowers = [0, 0, 0, 0, 0]
     field = Field(FIELD_WIDTH, FIELD_HEIGHT, FIELD_CELL_WIDTH, FIELD_CELL_HEIGHT, FIELD_LEFT, FIELD_TOP, screen, game)
     panel = Panel(PANEL_WIDTH, PANEL_CELL_WIDTH, PANEL_CELL_HEIGHT, PANEL_LEFT, PANEL_TOP, PANEL_STEP, screen, game)
     bMenu = button(gamesSprites['buttonMenu'],  WIDTH2 - 170, 0)
     objects = []
     flgPlant = False
+    flgShovel = False
     while True:
         game.time += 1
         if (game.time + 1) % 300 == 0:
@@ -302,20 +313,30 @@ def game():
             if event.type == pygame.QUIT:
                 terminate()
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                #print(event.pos)
+                if 330 <= event.pos[0] <= 384 and 3 <= event.pos[1] <= 57:
+                    flgShovel = not flgShovel
                 if pygame.Rect.collidepoint(bMenu.rect, event.pos):
                     shields['pause']()
-                temp = field.get_click(event.pos, panel.checkPlant, objects)
+                temp = field.get_click(event.pos, panel.checkPlant, objects, flgShovel)
                 objects = temp[2]
                 if temp[0] == True:
                     panel.checkPlant = ''
                     panel.returnSostoynie(True)
                     game.suns = temp[1]
                     flgPlant = False
+                flgShovel = temp[3]
                 panel.get_click(event.pos)
                 if panel.checkPlant:
                     screen.blit(plants[panel.checkPlant[0]][0], event.pos)
                     flgPlant = True
+                    flgShovel = False
+                else:
+                    flgPlant = False
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                panel.checkPlant = ''
+                panel.returnSostoynie(True)
+                flgPlant = False
+                flgShovel = False
 
         start += 1
         if start >= timer:
@@ -363,6 +384,8 @@ def game():
         screen.blit(gamesSprites['yardDay'], (0, 0))
         screen.blit(gamesSprites['buttonMenu'], (WIDTH2 - 170, 0))
         screen.blit(gamesSprites['panelSun'], (170, 0))
+        screen.blit(gamesSprites['shovelB'], (330, 3))
+
         field.render()
         panel.render()
 
@@ -376,9 +399,10 @@ def game():
         screen.blit(textSun, (240, 15))
 
         for x in sorted(zs.sprites(), key=lambda x: x.row):
-            if x.update() == 'ZombieWin':
+            if x.update() == 'ZombieWon':
                 return shields['pause']
             screen.blit(x.image, (x.rect.x, x.rect.y))
+
         i = 0
         while i < len(objects):
             objects[i].update()
@@ -389,15 +413,17 @@ def game():
                 screen.blit(objects[i].image, (objects[i].rect.x, objects[i].rect.y))
                 i += 1
 
+        if flgShovel:
+            pygame.mouse.set_visible(False)
+            field.mouse_move(event)
+            screen.blit(gamesSprites['shovel'], [event[0] - 25, event[1] - 25])
+        else:
+            pygame.mouse.set_visible(True)
+
         pygame.display.flip()
         clock.tick(FPS)
 
 
-pygame.init()
-pygame.display.set_caption('Plants VS Zombies 4')
-pygame.display.set_icon(pygame.image.load('Graphics/other/icon.png'))
-#screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-screen = pygame.display.set_mode(SIZE2)
 clock = pygame.time.Clock()
 
 shields = {'load_screen': load_screen,
