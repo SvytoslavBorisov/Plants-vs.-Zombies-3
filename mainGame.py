@@ -55,7 +55,7 @@ gamePeremen = Game(500)
 gamePeremen.name = inputName()
 if gamePeremen.name == '':
     gamePeremen.name = 'NoName'
-gamePeremen.soundVolume = 0
+gamePeremen.soundVolume = 0.5
 
 
 from classPlant import *
@@ -173,6 +173,7 @@ def pause():
 
 def start_screen():
 
+    musicGame.stop()
     musicMainMenu.play(-1)
 
     indexAnimationMainMenu = 0
@@ -247,7 +248,6 @@ def start_screen():
                     musicMainMenu.stop()
                     return shields['game']()
                 if 20 <= event.pos[0] <= 310 and 120 <= event.pos[1] <= 180:
-                    musicMainMenu.stop()
                     shields['record']()
                 elif 788 <= event.pos[0] <= 902 and 175 <= event.pos[1] <= 218:
                     screen.blit(bStartChange.image, (580, 80))
