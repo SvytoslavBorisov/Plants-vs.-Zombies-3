@@ -16,7 +16,7 @@ class Sunrise(pygame.sprite.Sprite):
         self.game = game
         self.row, self.col = row, col
         self.cost = 50
-        for j in range(16):
+        for j in range(14):
             for i in range(len(spritesNormal)):
                 self.images_listNormal.append(spritesNormal[i])
                 if i & 1:

@@ -450,7 +450,7 @@ def game():
             start = 0
             if k1 > 100:
                 k1 -= 20
-        if random.choice([0] * k1 + [1] * 2):
+        if random.choice([0] * k1 + [1] * 4):
             if kk // 3 * 2 < k1 <= kk:
                 if fl1 == 0:
                     x = 3

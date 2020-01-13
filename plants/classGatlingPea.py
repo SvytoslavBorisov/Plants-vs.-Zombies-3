@@ -74,6 +74,6 @@ class Pea(pygame.sprite.Sprite):
             if self.rect.x - 80 >= z.x >= self.rect.x - 90 and self.row == z.row:
                 z.hp -= 10
                 self.kill = True
-                screen.blit(plants['pea1'], (self.rect.x + 10, self.rect.y))
+                self.screen.blit(plants['pea1'], (self.rect.x + 10, self.rect.y))
                 return None
         return self.rect
