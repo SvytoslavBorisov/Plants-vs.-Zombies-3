@@ -194,3 +194,4 @@ zombies_hp = {'normal': 80,
               'bucket': 350}
 
 lownmowers = [0, 0, 0, 0, 0]
+
